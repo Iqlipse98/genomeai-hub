@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GenomeAI Hub - Bioinformatics Training Platform</title>
+    <title>Tenacious - Bioinformatics & Genomics Services</title>
     <style>
         * {
             margin: 0;
@@ -12,58 +12,60 @@
         }
 
         :root {
-            --primary-color: #2196F3;
-            --secondary-color: #1976D2;
-            --accent-color: #FF6B6B;
-            --dark-bg: #0d1117;
-            --light-bg: #161b22;
-            --text-primary: #c9d1d9;
-            --text-secondary: #8b949e;
-            --border-color: #30363d;
-            --success: #238636;
-            --warning: #d29922;
-            --error: #f85149;
+            --primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --dark-bg: #0f0f23;
+            --light-bg: #1a1a3e;
+            --card-bg: #16213e;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0d8;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            background: var(--dark-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #0f0f23 100%);
             color: var(--text-primary);
             line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            overflow-x: hidden;
         }
 
         /* Navigation */
         nav {
-            background: var(--light-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 1rem 0;
-            position: sticky;
+            position: fixed;
             top: 0;
-            z-index: 100;
-        }
-
-        nav .container {
+            width: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+            padding: 1.5rem 0;
+            z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding-left: 5%;
+            padding-right: 5%;
         }
 
         .nav-brand {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-decoration: none;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
             align-items: center;
         }
 
@@ -71,476 +73,653 @@
             color: var(--text-primary);
             text-decoration: none;
             cursor: pointer;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            font-weight: 500;
+            position: relative;
         }
 
         .nav-link:hover {
-            color: var(--primary-color);
+            color: #667eea;
         }
 
-        .nav-link.active {
-            color: var(--primary-color);
-            font-weight: bold;
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
         }
 
-        .btn-logout {
-            background: var(--error);
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-nav {
+            background: var(--primary);
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.8rem 2rem;
             border: none;
-            border-radius: 4px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: background 0.3s;
+            font-weight: 600;
+            transition: all 0.3s;
         }
 
-        .btn-logout:hover {
-            background: #da3633;
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
 
-        /* Main Content */
-        main {
-            margin-top: 2rem;
-            margin-bottom: 2rem;
+        /* Main container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
         }
 
+        /* Sections */
         .section {
             display: none;
+            animation: fadeIn 0.5s ease-in;
         }
 
         .section.active {
             display: block;
         }
 
-        /* Buttons */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 6rem;
+            gap: 4rem;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .hero h1 .gradient {
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
         .btn {
-            padding: 0.75rem 1.5rem;
+            padding: 1rem 2.5rem;
             border: none;
-            border-radius: 4px;
+            border-radius: 50px;
             cursor: pointer;
+            font-weight: 600;
             font-size: 1rem;
             transition: all 0.3s;
-            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn-primary {
-            background: var(--primary-color);
+            background: var(--primary);
             color: white;
         }
 
         .btn-primary:hover {
-            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
         }
 
         .btn-secondary {
-            background: var(--light-bg);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
+            border: 2px solid #667eea;
+            color: #667eea;
+            background: transparent;
         }
 
         .btn-secondary:hover {
-            background: var(--border-color);
+            background: rgba(102, 126, 234, 0.1);
         }
 
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #2ea043;
-        }
-
-        .btn-small {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-        }
-
-        /* Forms */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-
-        input, textarea, select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            background: var(--light-bg);
-            color: var(--text-primary);
-            font-size: 1rem;
-        }
-
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .checkbox-group {
+        .hero-visual {
+            flex: 1;
+            height: 500px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+            border-radius: 20px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            animation: float 3s ease-in-out infinite;
         }
 
-        .checkbox-group input {
-            width: auto;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(20px); }
         }
 
-        /* Cards */
-        .card {
-            background: var(--light-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: transform 0.3s, box-shadow 0.3s;
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
         }
 
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
-            border-color: var(--primary-color);
+        .service-card {
+            background: var(--card-bg);
+            border: 2px solid rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
+        .service-card:hover {
+            border-color: #667eea;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            opacity: 0.1;
+            transition: left 0.3s;
+        }
+
+        .service-card:hover::before {
+            left: 0;
+        }
+
+        .service-icon {
+            font-size: 3rem;
             margin-bottom: 1rem;
         }
 
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: var(--primary-color);
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
         }
 
-        .card-subtitle {
+        .service-card p {
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-top: 0.25rem;
+            position: relative;
+            z-index: 1;
+            font-size: 0.95rem;
         }
 
-        .badge {
+        .service-meta {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(102, 126, 234, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-meta span {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
+            background: rgba(102, 126, 234, 0.2);
+            padding: 0.5rem 1rem;
             border-radius: 20px;
             font-size: 0.85rem;
-            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
         }
 
-        .badge-beginner {
-            background: rgba(35, 134, 54, 0.2);
-            color: #3fb950;
+        /* Features Section */
+        .features {
+            margin: 6rem 0;
         }
 
-        .badge-intermediate {
-            background: rgba(210, 153, 34, 0.2);
-            color: #d29922;
+        .section-title {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: 800;
         }
 
-        .badge-advanced {
-            background: rgba(248, 81, 73, 0.2);
-            color: #f85149;
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
         }
 
-        .badge-pending {
-            background: rgba(210, 153, 34, 0.2);
-            color: #d29922;
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
         }
 
-        .badge-approved {
-            background: rgba(35, 134, 54, 0.2);
-            color: #3fb950;
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
         }
 
-        /* Grid */
-        .grid {
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-item h4 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .feature-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border: 2px solid rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border-color: #667eea;
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 1rem 0;
+        }
+
+        .price-period {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+            color: var(--text-secondary);
+        }
+
+        .pricing-features li:before {
+            content: "✓ ";
+            color: var(--success);
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* FAQ */
+        .faq-section {
+            margin: 4rem 0;
+        }
+
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .faq-question h4 {
+            font-size: 1.1rem;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Analysis Tool */
+        .analysis-tool {
+            background: var(--card-bg);
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 15px;
+            padding: 3rem;
+            margin: 2rem 0;
+        }
+
+        .query-form {
             display: grid;
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
 
-        .grid-2 {
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        .form-group {
+            display: flex;
+            flex-direction: column;
         }
 
-        .grid-3 {
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 1rem;
         }
 
-        /* Stats */
-        .stats-grid {
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 1rem;
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            color: var(--text-primary);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(176, 176, 216, 0.6);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+            background: rgba(102, 126, 234, 0.15);
+        }
+
+        .textarea-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Login Form */
+        .auth-container {
+            max-width: 500px;
+            margin: 6rem auto;
+            background: var(--card-bg);
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 15px;
+            padding: 3rem;
+        }
+
+        .auth-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 0.8rem;
+            background: transparent;
+            border: 2px solid transparent;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .auth-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .auth-tab:hover {
+            color: #667eea;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .form-link a {
+            color: #667eea;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .testimonial-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            padding: 2rem;
+        }
+
+        .stars {
+            color: #fbbf24;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .testimonial-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .testimonial-role {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
 
         .stat-card {
-            background: var(--light-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            background: var(--card-bg);
+            border: 2px solid rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
             padding: 1.5rem;
             text-align: center;
         }
 
         .stat-number {
             font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
+            font-weight: 800;
+            background: var(--primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
         }
 
         .stat-label {
             color: var(--text-secondary);
             font-size: 0.9rem;
-            margin-top: 0.5rem;
         }
 
-        /* Messages */
-        .alert {
-            padding: 1rem;
-            border-radius: 4px;
-            margin-bottom: 1rem;
-        }
-
-        .alert-success {
-            background: rgba(35, 134, 54, 0.2);
-            color: #3fb950;
-            border: 1px solid rgba(35, 134, 54, 0.5);
-        }
-
-        .alert-error {
-            background: rgba(248, 81, 73, 0.2);
-            color: #f85149;
-            border: 1px solid rgba(248, 81, 73, 0.5);
-        }
-
-        .alert-info {
-            background: rgba(33, 150, 243, 0.2);
-            color: #58a6ff;
-            border: 1px solid rgba(33, 150, 243, 0.5);
-        }
-
-        /* Modals */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 200;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--light-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 2rem;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Chat */
-        .chat-container {
-            background: var(--light-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            height: 500px;
-        }
-
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
+        /* Message */
         .message {
-            display: flex;
+            padding: 1rem;
+            border-radius: 8px;
             margin-bottom: 1rem;
         }
 
-        .message.user {
-            justify-content: flex-end;
+        .message.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid #10b981;
         }
 
-        .message-content {
-            background: var(--light-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
-            max-width: 70%;
-        }
-
-        .message.user .message-content {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .message-sender {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.25rem;
-        }
-
-        .message-text {
-            margin: 0;
-        }
-
-        .message-time {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-top: 0.25rem;
-        }
-
-        .chat-input-area {
-            border-top: 1px solid var(--border-color);
-            padding: 1rem;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .chat-input-area input {
-            flex: 1;
-        }
-
-        .chat-input-area button {
-            padding: 0.75rem 1.5rem;
-        }
-
-        /* Filters */
-        .filter-group {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-group select {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        /* Table */
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 1.5rem;
-        }
-
-        th {
-            background: var(--light-bg);
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 2px solid var(--border-color);
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        tr:hover {
-            background: rgba(33, 150, 243, 0.1);
-        }
-
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary);
-        }
-
-        .loading::after {
-            content: '';
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid var(--border-color);
-            border-top-color: var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        .message.error {
+            background: rgba(245, 87, 108, 0.2);
+            color: #f55a6e;
+            border: 1px solid #f55a6e;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                padding-top: 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-visual {
+                height: 300px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
             .nav-links {
                 gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
 
-            .grid-2 {
-                grid-template-columns: 1fr;
+            .section-title {
+                font-size: 2rem;
             }
 
-            .modal-content {
-                width: 95%;
-                padding: 1.5rem;
-            }
-
-            .chat-container {
-                height: 400px;
-            }
-
-            .message-content {
-                max-width: 100%;
+            .pricing-card.featured {
+                transform: scale(1);
             }
         }
     </style>
@@ -548,241 +727,452 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <div class="container">
-            <a href="#" class="nav-brand">🧬 GenomeAI Hub</a>
-            <div class="nav-links" id="navLinks">
-                <a href="#" class="nav-link" id="authLink" onclick="showSection('auth'); return false;">Login</a>
-            </div>
+        <div class="nav-brand">⚡ Tenacious</div>
+        <div class="nav-links">
+            <a class="nav-link" onclick="navigate('home')">Home</a>
+            <a class="nav-link" onclick="navigate('services')">Services</a>
+            <a class="nav-link" onclick="navigate('analysis')">Analysis</a>
+            <a class="nav-link" onclick="navigate('courses')">Courses</a>
+            <button class="btn-nav" onclick="navigate('courses')">Login / Signup</button>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Auth Section -->
-        <div id="auth" class="section active">
-            <div class="grid">
-                <div style="max-width: 400px; margin: 2rem auto; width: 100%;">
-                    <!-- Signup Form -->
-                    <div id="signupForm" style="display: none;">
-                        <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Create Account</h2>
-                        <div class="form-group">
-                            <label>Full Name</label>
-                            <input type="text" id="signupFullName" placeholder="John Doe">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" id="signupEmail" placeholder="john@example.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" id="signupPassword" placeholder="Min 6 characters">
-                        </div>
-                        <div class="form-group">
-                            <label>Organization</label>
-                            <input type="text" id="signupOrg" placeholder="Your University/Company">
-                        </div>
-                        <div class="form-group">
-                            <label>Expertise Level</label>
-                            <select id="signupLevel">
-                                <option value="beginner">Beginner</option>
-                                <option value="intermediate" selected>Intermediate</option>
-                                <option value="advanced">Advanced</option>
-                            </select>
-                        </div>
-                        <button class="btn btn-primary" onclick="signup()">Create Account</button>
-                        <p style="text-align: center; margin-top: 1rem;">
-                            Already have account? <a href="#" onclick="toggleAuthForm(); return false;" style="color: var(--primary-color);">Login</a>
-                        </p>
+    <!-- Home Section -->
+    <section id="home" class="section active">
+        <div class="container">
+            <!-- Hero -->
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Transform Genomic Data into <span class="gradient">Insights</span></h1>
+                    <p>Tenacious provides cutting-edge bioinformatics solutions for genome analysis, k-mer GWAS, and advanced genomic research. Expert-led analysis. Production-quality results.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" onclick="navigate('services')">Explore Services</button>
+                        <button class="btn btn-secondary" onclick="navigate('analysis')">Try Analysis Tool</button>
                     </div>
+                </div>
+                <div class="hero-visual">
+                    <span>🧬 Genomic Intelligence Platform</span>
+                </div>
+            </div>
 
-                    <!-- Login Form -->
-                    <div id="loginForm">
-                        <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Login</h2>
-                        <div id="loginMessage"></div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" id="loginEmail" placeholder="your@email.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" id="loginPassword" placeholder="Your password">
-                        </div>
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="rememberMe">
-                            <label style="margin: 0;">Remember me</label>
-                        </div>
-                        <button class="btn btn-primary" style="width: 100%;" onclick="login()">Login</button>
-                        
-                        <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
-                        
-                        <p style="text-align: center; margin-bottom: 1rem;">Test Account:</p>
-                        <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
-                            Email: <strong>demo@example.com</strong><br>
-                            Password: <strong>Demo123</strong>
-                        </p>
-                        
-                        <p style="text-align: center; margin-top: 1rem;">
-                            New here? <a href="#" onclick="toggleAuthForm(); return false;" style="color: var(--primary-color);">Sign up</a>
-                        </p>
+            <!-- Features -->
+            <div class="features">
+                <h2 class="section-title">Why Choose Tenacious?</h2>
+                <p class="section-subtitle">Professional bioinformatics expertise meets modern technology</p>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <h4>Precision Analysis</h4>
+                        <p>Production-grade genomic analysis using industry-standard pipelines</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <h4>Fast Processing</h4>
+                        <p>Optimized workflows for rapid results without compromising quality</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">👨‍🔬</div>
+                        <h4>Expert Support</h4>
+                        <p>Real bioinformaticians with production experience</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <h4>Detailed Reports</h4>
+                        <p>Comprehensive analysis reports with visualizations</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔒</div>
+                        <h4>Secure & Private</h4>
+                        <p>Enterprise-grade data security and privacy protection</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🌍</div>
+                        <h4>Global Reach</h4>
+                        <p>Available worldwide with 24/7 support</p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Dashboard Section -->
-        <div id="dashboard" class="section">
-            <h2 style="margin-bottom: 1.5rem;">Dashboard</h2>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number" id="statCourses">0</div>
-                    <div class="stat-label">Courses Applied</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="statChats">0</div>
-                    <div class="stat-label">Chat Sessions</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number" id="statMessages">0</div>
-                    <div class="stat-label">Messages</div>
+            <!-- Testimonials -->
+            <div style="margin: 6rem 0;">
+                <h2 class="section-title">What Researchers Say</h2>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testimonial-text">"Tenacious helped us identify novel k-mer variants that other tools missed. The analysis quality is exceptional."</p>
+                        <p class="testimonial-author">Dr. Sarah Khan</p>
+                        <p class="testimonial-role">Genomics Research, University of Delhi</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testimonial-text">"Fast, reliable, and the support team understands genomics. This is exactly what we needed for our pipeline."</p>
+                        <p class="testimonial-author">Dr. James Liu</p>
+                        <p class="testimonial-role">Computational Biology, IIT</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="testimonial-text">"The annotation quality is outstanding. Saved us weeks of manual curation work."</p>
+                        <p class="testimonial-author">Dr. Priya Sharma</p>
+                        <p class="testimonial-role">Crop Genomics, IARI</p>
+                    </div>
                 </div>
             </div>
 
-            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Recent Applications</h3>
-            <div id="recentApps"></div>
-
-            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Recent Chats</h3>
-            <div id="recentChats"></div>
+            <!-- CTA -->
+            <div style="text-align: center; margin: 4rem 0; padding: 3rem; background: rgba(102, 126, 234, 0.1); border-radius: 15px; border: 2px solid rgba(102, 126, 234, 0.2);">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem;">Ready to Transform Your Genomic Research?</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Start with our analysis tool or explore our training courses.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="navigate('analysis')">Try Analysis Now</button>
+                    <button class="btn btn-secondary" onclick="navigate('courses')">View Courses</button>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- Courses Section -->
-        <div id="courses" class="section">
-            <h2 style="margin-bottom: 1.5rem;">Training Courses</h2>
-            
-            <div class="filter-group">
-                <select id="levelFilter" onchange="filterCourses()">
-                    <option value="">All Levels</option>
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="advanced">Advanced</option>
-                </select>
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container" style="padding-top: 6rem;">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">Comprehensive bioinformatics solutions for all your genomic research needs</p>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🔍</div>
+                    <h3>k-mer GWAS Analysis</h3>
+                    <p>Advanced genome-wide association studies using k-mer based approaches. Identify genetic variants with precision.</p>
+                    <div class="service-meta">
+                        <span>Advanced</span>
+                        <span>Popular</span>
+                        <span>Custom Pipeline</span>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📋</div>
+                    <h3>Genome Annotation</h3>
+                    <p>Comprehensive genome annotation using SnpEff and GFF3 processing. Get detailed genomic feature annotations.</p>
+                    <div class="service-meta">
+                        <span>Production-Ready</span>
+                        <span>Accurate</span>
+                        <span>Fast Turnaround</span>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🧬</div>
+                    <h3>RNA-Seq Analysis</h3>
+                    <p>Complete RNA-seq pipeline from raw reads to expression quantification. Quality control, alignment, and analysis.</p>
+                    <div class="service-meta">
+                        <span>Comprehensive</span>
+                        <span>Visualization</span>
+                        <span>Trending</span>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">👥</div>
+                    <h3>Population Genomics</h3>
+                    <p>Population structure analysis, FST calculations, and evolutionary genomics. Understand genetic diversity.</p>
+                    <div class="service-meta">
+                        <span>Statistical</span>
+                        <span>Detailed Reports</span>
+                        <span>Expert Analysis</span>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🌾</div>
+                    <h3>Pangenome Analysis</h3>
+                    <p>Pangenome construction and analysis for crop species. Discover genetic variation and structural diversity.</p>
+                    <div class="service-meta">
+                        <span>Legume Focus</span>
+                        <span>Crop Genomics</span>
+                        <span>Advanced</span>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">⚙️</div>
+                    <h3>Custom Pipeline Development</h3>
+                    <p>Bespoke bioinformatics pipelines tailored to your research. Built with Snakemake, production-ready.</p>
+                    <div class="service-meta">
+                        <span>Custom</span>
+                        <span>Scalable</span>
+                        <span>Maintenance Included</span>
+                    </div>
+                </div>
             </div>
 
-            <div class="grid grid-2" id="coursesList"></div>
-        </div>
+            <!-- Pricing -->
+            <div style="margin-top: 6rem;">
+                <h2 class="section-title">Service Pricing</h2>
+                <p class="section-subtitle">Transparent pricing for all bioinformatics services</p>
 
-        <!-- Profile Section -->
-        <div id="profile" class="section">
-            <h2 style="margin-bottom: 1.5rem;">User Profile</h2>
-            
-            <div style="max-width: 600px;">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="profileFullName">
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3>Basic Analysis</h3>
+                        <div class="price">$299<span class="price-period">/project</span></div>
+                        <ul class="pricing-features">
+                            <li>Single sample analysis</li>
+                            <li>Standard pipeline</li>
+                            <li>Email support</li>
+                            <li>Basic report</li>
+                        </ul>
+                        <button class="btn btn-secondary" onclick="navigate('analysis')">Start Analysis</button>
+                    </div>
+
+                    <div class="pricing-card featured">
+                        <h3>Professional</h3>
+                        <div class="price">$799<span class="price-period">/project</span></div>
+                        <ul class="pricing-features">
+                            <li>Multi-sample analysis</li>
+                            <li>Custom pipeline option</li>
+                            <li>Priority support</li>
+                            <li>Detailed report + visualization</li>
+                        </ul>
+                        <button class="btn btn-primary">Choose Plan</button>
+                    </div>
+
+                    <div class="pricing-card">
+                        <h3>Enterprise</h3>
+                        <div class="price">$2,999<span class="price-period">+/project</span></div>
+                        <ul class="pricing-features">
+                            <li>Large-scale analysis</li>
+                            <li>Dedicated pipeline</li>
+                            <li>24/7 expert support</li>
+                            <li>Publication-ready results</li>
+                        </ul>
+                        <button class="btn btn-secondary" onclick="showMessage('Contact support for enterprise pricing')">Contact Us</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" id="profileEmail" disabled>
-                </div>
-                <div class="form-group">
-                    <label>Organization</label>
-                    <input type="text" id="profileOrg">
-                </div>
-                <div class="form-group">
-                    <label>Expertise Level</label>
-                    <select id="profileLevel">
-                        <option value="beginner">Beginner</option>
-                        <option value="intermediate">Intermediate</option>
-                        <option value="advanced">Advanced</option>
-                    </select>
-                </div>
-                <button class="btn btn-primary" onclick="updateProfile()">Save Changes</button>
             </div>
-
-            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">My Applications</h3>
-            <div id="myApplications"></div>
         </div>
+    </section>
 
-        <!-- Chat Section -->
-        <div id="chat" class="section">
-            <h2 style="margin-bottom: 1.5rem;">Expert Chat</h2>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
-                <div>
-                    <h3 style="margin-bottom: 1rem;">New Chat Session</h3>
+    <!-- Analysis Section -->
+    <section id="analysis" class="section">
+        <div class="container" style="padding-top: 6rem;">
+            <h2 class="section-title">Genomic Analysis Tool</h2>
+            <p class="section-subtitle">Query and analyze genomic data with our interactive tool</p>
+
+            <div class="analysis-tool">
+                <h3 style="margin-bottom: 2rem; font-size: 1.8rem;">Submit Your Data</h3>
+                
+                <form onsubmit="submitAnalysis(event)" class="query-form">
                     <div class="form-group">
-                        <label>Topic</label>
-                        <input type="text" id="chatTopic" placeholder="e.g., k-mer GWAS Analysis">
+                        <label>Analysis Type *</label>
+                        <select id="analysisType" required>
+                            <option value="">Select analysis type</option>
+                            <option value="gwas">k-mer GWAS</option>
+                            <option value="annotation">Genome Annotation</option>
+                            <option value="rnaseq">RNA-Seq</option>
+                            <option value="population">Population Genetics</option>
+                            <option value="pangenome">Pangenome</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Project Name *</label>
+                        <input type="text" id="projectName" placeholder="e.g., Lentil Genome Analysis 2024" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Research Description *</label>
+                        <textarea id="researchDesc" placeholder="Describe your research objectives and data..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email Address *</label>
+                        <input type="email" id="analysisEmail" placeholder="your@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sample Size</label>
+                        <input type="number" id="sampleSize" placeholder="Number of samples" min="1">
+                    </div>
+
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="submit" class="btn btn-primary" style="flex: 1;">Submit Analysis Request</button>
+                        <button type="reset" class="btn btn-secondary" style="flex: 1;">Clear Form</button>
+                    </div>
+                </form>
+
+                <div id="analysisMessage"></div>
+            </div>
+
+            <!-- Query Information -->
+            <div style="margin-top: 4rem;">
+                <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Query Information & Guidelines</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h4 style="margin-bottom: 1rem;">Data Format</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Submit genomic data in FASTA, FASTQ, VCF, or GFF3 formats. Our system accepts both compressed and uncompressed files.</p>
+                    </div>
+
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h4 style="margin-bottom: 1rem;">Processing Time</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Basic analysis: 24-48 hours. Large datasets: 3-5 business days. Enterprise projects: custom timeline.</p>
+                    </div>
+
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h4 style="margin-bottom: 1rem;">Results Delivery</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Receive comprehensive reports with visualizations, raw data, and interpretation. Downloadable in multiple formats.</p>
+                    </div>
+
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h4 style="margin-bottom: 1rem;">Data Security</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Enterprise-grade encryption. Data deleted after analysis unless otherwise requested. GDPR compliant.</p>
+                    </div>
+
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h4 style="margin-bottom: 1rem;">Support & Consultation</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Expert bioinformaticians available for questions. Optional consultation calls for complex projects.</p>
+                    </div>
+
+                    <div style="background: var(--card-bg); padding: 1.5rem; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h4 style="margin-bottom: 1rem;">Academic Pricing</h4>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Students and academic researchers get 30% discount. Non-profit rates available upon request.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="faq-section" style="margin-top: 4rem;">
+                <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">Frequently Asked Questions</h3>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>What file formats do you accept?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept FASTA, FASTQ, VCF, GFF3, SAM/BAM, and most common bioinformatics formats. Raw sequencing data from Illumina, PacBio, and Oxford Nanopore are fully supported.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>How long does analysis typically take?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Processing time depends on data size and analysis type. Small projects: 24-48 hours. Large datasets: 3-5 business days. We'll provide a timeline estimate after receiving your data.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Can I use your results in publications?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! All our analysis results are publication-ready. We provide detailed methods sections and can assist with manuscript preparation. Citation of Tenacious is appreciated but not required.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Is my data secure and private?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. We use enterprise-grade encryption, secure servers, and follow GDPR compliance. Your data is automatically deleted 30 days after analysis unless you request longer storage. We never share data with third parties.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h4>Do you offer custom pipelines?</h4>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! We can develop custom bioinformatics pipelines tailored to your specific needs. Built with Snakemake, production-ready, and includes documentation and support. Contact us for custom project pricing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Courses Section (Protected) -->
+    <section id="courses" class="section">
+        <div class="container" style="padding-top: 6rem;">
+            <div id="authContainer" class="auth-container">
+                <h2 class="auth-title">Access Training Courses</h2>
+
+                <div class="auth-tabs">
+                    <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                    <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form active" onsubmit="login(event)">
+                    <div id="loginMessage"></div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" placeholder="your@email.com" required>
                     </div>
                     <div class="form-group">
-                        <label>Your Question</label>
-                        <textarea id="chatMessage" placeholder="Ask your question to an expert..."></textarea>
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" placeholder="Password" required>
                     </div>
-                    <button class="btn btn-primary" onclick="startChat()">Start Chat</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                    <p class="form-link">Demo: <strong>demo@example.com</strong> / <strong>Demo123</strong></p>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signupForm" class="auth-form" onsubmit="signup(event)">
+                    <div id="signupMessage"></div>
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="signupName" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="signupEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="signupPassword" placeholder="Min 6 characters" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Organization</label>
+                        <input type="text" id="signupOrg" placeholder="Your University/Institute">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+                </form>
+            </div>
+
+            <!-- Courses Dashboard (shown after login) -->
+            <div id="coursesContent" style="display: none;">
+                <h2 class="section-title">Training Courses</h2>
+                <p class="section-subtitle">Learn bioinformatics from expert instructors</p>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div>Welcome, <strong id="userNameDisplay"></strong>!</div>
+                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
                 </div>
 
-                <div>
-                    <h3 style="margin-bottom: 1rem;">Active Chat</h3>
-                    <div id="activeChatInfo" style="color: var(--text-secondary); padding: 1rem; text-align: center;">
-                        No active chat. Start one to begin!
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="statCourses">0</div>
+                        <div class="stat-label">Courses Applied</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="statChats">0</div>
+                        <div class="stat-label">Chat Sessions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="statMessages">0</div>
+                        <div class="stat-label">Messages</div>
                     </div>
                 </div>
-            </div>
 
-            <div id="chatContainer" style="display: none;">
-                <div class="chat-container">
-                    <div class="chat-messages" id="chatMessages"></div>
-                    <div class="chat-input-area">
-                        <input type="text" id="messageInput" placeholder="Type a message...">
-                        <button class="btn btn-primary" onclick="sendMessage()">Send</button>
-                    </div>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Chat History</h3>
-            <div id="chatHistory"></div>
-        </div>
-    </main>
-
-    <!-- Course Detail Modal -->
-    <div id="courseModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="modalTitle"></h2>
-                <button class="modal-close" onclick="closeModal('courseModal')">&times;</button>
-            </div>
-            <div id="modalBody"></div>
-            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
-                <button class="btn btn-primary" onclick="applyCourse()">Apply Now</button>
-                <button class="btn btn-secondary" onclick="closeModal('courseModal')">Close</button>
+                <div class="services-grid" id="coursesList"></div>
             </div>
         </div>
-    </div>
-
-    <!-- Application Modal -->
-    <div id="applicationModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Course Application</h2>
-                <button class="modal-close" onclick="closeModal('applicationModal')">&times;</button>
-            </div>
-            <div class="form-group">
-                <label>What's your motivation for this course?</label>
-                <textarea id="appMotivation" placeholder="Explain why you want to take this course..."></textarea>
-            </div>
-            <div class="form-group">
-                <label>Previous Experience (Optional)</label>
-                <textarea id="appExperience" placeholder="Describe your relevant experience..."></textarea>
-            </div>
-            <div class="form-group">
-                <label>Expected Outcomes</label>
-                <textarea id="appOutcomes" placeholder="What do you hope to learn?..."></textarea>
-            </div>
-            <div style="display: flex; gap: 1rem;">
-                <button class="btn btn-success" onclick="submitApplication()">Submit Application</button>
-                <button class="btn btn-secondary" onclick="closeModal('applicationModal')">Cancel</button>
-            </div>
-        </div>
-    </div>
+    </section>
 
     <script>
         // ============================================
@@ -790,27 +1180,24 @@
         // ============================================
 
         const DB = {
-            users: JSON.parse(localStorage.getItem('users')) || [],
-            courses: JSON.parse(localStorage.getItem('courses')) || [],
-            applications: JSON.parse(localStorage.getItem('applications')) || [],
-            chatSessions: JSON.parse(localStorage.getItem('chatSessions')) || [],
-            chatMessages: JSON.parse(localStorage.getItem('chatMessages')) || [],
-            currentUser: JSON.parse(localStorage.getItem('currentUser')) || null
+            users: JSON.parse(localStorage.getItem('tenacious_users')) || [],
+            courses: JSON.parse(localStorage.getItem('tenacious_courses')) || [],
+            applications: JSON.parse(localStorage.getItem('tenacious_applications')) || [],
+            analysisRequests: JSON.parse(localStorage.getItem('tenacious_analysis')) || [],
+            currentUser: JSON.parse(localStorage.getItem('tenacious_currentUser')) || null
         };
 
-        // Initialize data if empty
+        // Initialize data
         function initializeData() {
             if (DB.users.length === 0) {
                 DB.users.push({
                     id: 1,
                     email: 'demo@example.com',
-                    password: hashPassword('Demo123'),
+                    password: btoa('Demo123'),
                     fullName: 'Demo User',
                     organization: 'Demo Lab',
-                    level: 'intermediate',
                     createdAt: new Date().toISOString()
                 });
-                saveData();
             }
 
             if (DB.courses.length === 0) {
@@ -818,7 +1205,7 @@
                     {
                         id: 1,
                         title: 'k-mer GWAS Analysis',
-                        description: 'Learn advanced k-mer based GWAS techniques for genome-wide association studies using kGWASflow pipeline.',
+                        description: 'Learn advanced k-mer based GWAS techniques using kGWASflow pipeline.',
                         level: 'advanced',
                         duration: 8,
                         instructor: 'Dr. Sarah Khan',
@@ -828,7 +1215,7 @@
                     {
                         id: 2,
                         title: 'Genome Annotation & Variant Calling',
-                        description: 'Master genome annotation using SnpEff and variant calling pipelines for NGS data analysis.',
+                        description: 'Master genome annotation using SnpEff and variant calling pipelines.',
                         level: 'intermediate',
                         duration: 6,
                         instructor: 'Dr. James Liu',
@@ -838,7 +1225,7 @@
                     {
                         id: 3,
                         title: 'RNA-Seq Data Analysis',
-                        description: 'Complete workflow for RNA-seq data processing, QC, alignment, and expression quantification.',
+                        description: 'Complete workflow for RNA-seq data processing and expression quantification.',
                         level: 'beginner',
                         duration: 6,
                         instructor: 'Dr. Priya Sharma',
@@ -848,7 +1235,7 @@
                     {
                         id: 4,
                         title: 'Population Genomics',
-                        description: 'Population structure analysis, FST calculations, and evolutionary genomics fundamentals.',
+                        description: 'Population structure analysis and evolutionary genomics fundamentals.',
                         level: 'intermediate',
                         duration: 7,
                         instructor: 'Dr. Michael Chen',
@@ -857,8 +1244,8 @@
                     },
                     {
                         id: 5,
-                        title: 'Pangenome Construction & Analysis',
-                        description: 'Build and analyze pangenomes for crop species using modern bioinformatics tools.',
+                        title: 'Pangenome Construction',
+                        description: 'Build and analyze pangenomes for crop species.',
                         level: 'advanced',
                         duration: 8,
                         instructor: 'Dr. Rajesh Patel',
@@ -868,7 +1255,7 @@
                     {
                         id: 6,
                         title: 'Bioinformatics Pipeline Development',
-                        description: 'Design production-grade bioinformatics pipelines using Snakemake and containerization.',
+                        description: 'Design production-grade bioinformatics pipelines using Snakemake.',
                         level: 'intermediate',
                         duration: 7,
                         instructor: 'Dr. Lisa Anderson',
@@ -876,84 +1263,61 @@
                         price: 179
                     }
                 ];
-                saveData();
             }
+
+            saveData();
         }
 
         function saveData() {
-            localStorage.setItem('users', JSON.stringify(DB.users));
-            localStorage.setItem('courses', JSON.stringify(DB.courses));
-            localStorage.setItem('applications', JSON.stringify(DB.applications));
-            localStorage.setItem('chatSessions', JSON.stringify(DB.chatSessions));
-            localStorage.setItem('chatMessages', JSON.stringify(DB.chatMessages));
-            localStorage.setItem('currentUser', JSON.stringify(DB.currentUser));
+            localStorage.setItem('tenacious_users', JSON.stringify(DB.users));
+            localStorage.setItem('tenacious_courses', JSON.stringify(DB.courses));
+            localStorage.setItem('tenacious_applications', JSON.stringify(DB.applications));
+            localStorage.setItem('tenacious_analysis', JSON.stringify(DB.analysisRequests));
+            localStorage.setItem('tenacious_currentUser', JSON.stringify(DB.currentUser));
         }
 
-        // Simple password hashing (for demo - use proper hashing in production)
-        function hashPassword(pwd) {
-            return btoa(pwd);
-        }
+        // ============================================
+        // NAVIGATION
+        // ============================================
 
-        function verifyPassword(pwd, hash) {
-            return hashPassword(pwd) === hash;
+        function navigate(sectionId) {
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+
+            if (sectionId === 'courses') {
+                if (DB.currentUser) {
+                    showCoursesContent();
+                } else {
+                    showAuthForm();
+                }
+            }
         }
 
         // ============================================
         // AUTHENTICATION
         // ============================================
 
-        function toggleAuthForm() {
-            const signup = document.getElementById('signupForm');
-            const login = document.getElementById('loginForm');
-            signup.style.display = signup.style.display === 'none' ? 'block' : 'none';
-            login.style.display = login.style.display === 'none' ? 'block' : 'none';
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(el => el.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.querySelectorAll('.auth-tab')[0].classList.add('active');
+                document.getElementById('loginForm').classList.add('active');
+            } else {
+                document.querySelectorAll('.auth-tab')[1].classList.add('active');
+                document.getElementById('signupForm').classList.add('active');
+            }
         }
 
-        function signup() {
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const fullName = document.getElementById('signupFullName').value;
-            const org = document.getElementById('signupOrg').value;
-            const level = document.getElementById('signupLevel').value;
-
-            if (!email || !password || !fullName) {
-                alert('Please fill all required fields');
-                return;
-            }
-
-            if (password.length < 6) {
-                alert('Password must be at least 6 characters');
-                return;
-            }
-
-            if (DB.users.find(u => u.email === email)) {
-                alert('Email already registered');
-                return;
-            }
-
-            const newUser = {
-                id: DB.users.length + 1,
-                email,
-                password: hashPassword(password),
-                fullName,
-                organization: org,
-                level,
-                createdAt: new Date().toISOString()
-            };
-
-            DB.users.push(newUser);
-            DB.currentUser = { id: newUser.id, email: newUser.email, fullName: newUser.fullName };
-            saveData();
-            showMessage('Account created successfully!', 'success');
-            setTimeout(() => updateUIForLoggedIn(), 1000);
-        }
-
-        function login() {
+        function login(e) {
+            e.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
 
-            const user = DB.users.find(u => u.email === email);
-            if (!user || !verifyPassword(password, user.password)) {
+            const user = DB.users.find(u => u.email === email && u.password === btoa(password));
+            if (!user) {
                 showMessage('Invalid email or password', 'error', 'loginMessage');
                 return;
             }
@@ -961,421 +1325,136 @@
             DB.currentUser = { id: user.id, email: user.email, fullName: user.fullName };
             saveData();
             showMessage('Login successful!', 'success', 'loginMessage');
-            setTimeout(() => updateUIForLoggedIn(), 1000);
+            setTimeout(() => showCoursesContent(), 1000);
+        }
+
+        function signup(e) {
+            e.preventDefault();
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const fullName = document.getElementById('signupName').value;
+            const organization = document.getElementById('signupOrg').value;
+
+            if (password.length < 6) {
+                showMessage('Password must be at least 6 characters', 'error', 'signupMessage');
+                return;
+            }
+
+            if (DB.users.find(u => u.email === email)) {
+                showMessage('Email already registered', 'error', 'signupMessage');
+                return;
+            }
+
+            DB.users.push({
+                id: DB.users.length + 1,
+                email,
+                password: btoa(password),
+                fullName,
+                organization,
+                createdAt: new Date().toISOString()
+            });
+
+            DB.currentUser = { id: DB.users.length, email, fullName };
+            saveData();
+            showMessage('Account created successfully!', 'success', 'signupMessage');
+            setTimeout(() => showCoursesContent(), 1000);
         }
 
         function logout() {
             DB.currentUser = null;
             saveData();
-            location.reload();
+            showAuthForm();
         }
 
-        function updateUIForLoggedIn() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.innerHTML = `
-                <a href="#" class="nav-link" onclick="showSection('dashboard'); return false;">Dashboard</a>
-                <a href="#" class="nav-link" onclick="showSection('courses'); return false;">Courses</a>
-                <a href="#" class="nav-link" onclick="showSection('chat'); return false;">Chat</a>
-                <a href="#" class="nav-link" onclick="showSection('profile'); return false;">Profile</a>
-                <button class="btn-logout" onclick="logout()">Logout</button>
-            `;
-            showSection('dashboard');
-            loadDashboard();
+        function showAuthForm() {
+            document.getElementById('authContainer').style.display = 'block';
+            document.getElementById('coursesContent').style.display = 'none';
         }
 
-        // ============================================
-        // SECTIONS
-        // ============================================
-
-        function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-
-            if (sectionId === 'courses') loadCourses();
-            else if (sectionId === 'dashboard') loadDashboard();
-            else if (sectionId === 'profile') loadProfile();
-            else if (sectionId === 'chat') loadChat();
-        }
-
-        function loadDashboard() {
-            const apps = DB.applications.filter(a => a.userId === DB.currentUser.id);
-            const chats = DB.chatSessions.filter(c => c.userId === DB.currentUser.id);
-            const messages = DB.chatMessages.filter(m => m.userId === DB.currentUser.id);
-
-            document.getElementById('statCourses').textContent = apps.length;
-            document.getElementById('statChats').textContent = chats.length;
-            document.getElementById('statMessages').textContent = messages.length;
-
-            const recentAppsHtml = apps.slice(-3).reverse().map(app => {
-                const course = DB.courses.find(c => c.id === app.courseId);
-                return `
-                    <div class="card">
-                        <div class="card-header">
-                            <div>
-                                <div class="card-title">${course.title}</div>
-                                <div class="card-subtitle">Applied on ${new Date(app.appliedAt).toLocaleDateString()}</div>
-                            </div>
-                            <span class="badge badge-${app.status}">${app.status}</span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            document.getElementById('recentApps').innerHTML = recentAppsHtml || '<p style="color: var(--text-secondary);">No applications yet. Start applying to courses!</p>';
-
-            const recentChatsHtml = chats.slice(-3).reverse().map(chat => `
-                <div class="card">
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">${chat.topic}</div>
-                            <div class="card-subtitle">Expert: ${chat.expertName || 'Awaiting assignment'}</div>
-                        </div>
-                        <span class="badge badge-${chat.status}">${chat.status}</span>
-                    </div>
-                </div>
-            `).join('');
-
-            document.getElementById('recentChats').innerHTML = recentChatsHtml || '<p style="color: var(--text-secondary);">No chat sessions yet. Start a new chat!</p>';
-        }
-
-        function loadCourses() {
-            const level = document.getElementById('levelFilter').value;
-            let courses = DB.courses;
-            if (level) courses = courses.filter(c => c.level === level);
-
-            const html = courses.map(course => `
-                <div class="card">
-                    <div class="card-header">
-                        <div>
-                            <div class="card-title">${course.title}</div>
-                            <div class="card-subtitle">by ${course.instructor}</div>
-                        </div>
-                        <span class="badge badge-${course.level}">${course.level}</span>
-                    </div>
-                    <p>${course.description}</p>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
-                        <div>
-                            <span style="color: var(--text-secondary);">⏱️ Duration:</span> ${course.duration} weeks
-                        </div>
-                        <div>
-                            <span style="color: var(--text-secondary);">👥 Participants:</span> ${course.participants}
-                        </div>
-                    </div>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="viewCourse(${course.id})">View Details</button>
-                </div>
-            `).join('');
-
-            document.getElementById('coursesList').innerHTML = html;
-        }
-
-        function filterCourses() {
-            loadCourses();
-        }
-
-        function loadProfile() {
-            const user = DB.users.find(u => u.id === DB.currentUser.id);
-            document.getElementById('profileFullName').value = user.fullName;
-            document.getElementById('profileEmail').value = user.email;
-            document.getElementById('profileOrg').value = user.organization;
-            document.getElementById('profileLevel').value = user.level;
-
-            const apps = DB.applications.filter(a => a.userId === user.id);
-            const appHtml = apps.map(app => {
-                const course = DB.courses.find(c => c.id === app.courseId);
-                return `
-                    <div class="card">
-                        <div style="display: flex; justify-content: space-between;">
-                            <div>
-                                <strong>${course.title}</strong>
-                                <div style="color: var(--text-secondary); font-size: 0.9rem;">Applied: ${new Date(app.appliedAt).toLocaleDateString()}</div>
-                            </div>
-                            <span class="badge badge-${app.status}">${app.status}</span>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            document.getElementById('myApplications').innerHTML = appHtml || '<p style="color: var(--text-secondary);">No applications yet.</p>';
-        }
-
-        function updateProfile() {
-            const user = DB.users.find(u => u.id === DB.currentUser.id);
-            user.fullName = document.getElementById('profileFullName').value;
-            user.organization = document.getElementById('profileOrg').value;
-            user.level = document.getElementById('profileLevel').value;
-            DB.currentUser.fullName = user.fullName;
-            saveData();
-            showMessage('Profile updated successfully!', 'success');
-        }
-
-        function loadChat() {
-            const sessions = DB.chatSessions.filter(s => s.userId === DB.currentUser.id);
-            const activeSession = sessions.find(s => s.status === 'active');
-
-            if (activeSession) {
-                document.getElementById('activeChatInfo').innerHTML = `
-                    <div style="text-align: left;">
-                        <div><strong>${activeSession.topic}</strong></div>
-                        <div style="color: var(--text-secondary); font-size: 0.9rem;">Expert: ${activeSession.expertName}</div>
-                        <div style="color: var(--text-secondary); font-size: 0.9rem;">Status: ${activeSession.status}</div>
-                    </div>
-                `;
-                document.getElementById('chatContainer').style.display = 'block';
-                loadChatMessages(activeSession.id);
-            } else {
-                document.getElementById('chatContainer').style.display = 'none';
-            }
-
-            const historyHtml = sessions.slice(-5).reverse().map(session => `
-                <div class="card">
-                    <div style="display: flex; justify-content: space-between;">
-                        <div>
-                            <strong>${session.topic}</strong>
-                            <div style="color: var(--text-secondary); font-size: 0.9rem;">Expert: ${session.expertName}</div>
-                        </div>
-                        <span class="badge badge-${session.status}">${session.status}</span>
-                    </div>
-                </div>
-            `).join('');
-
-            document.getElementById('chatHistory').innerHTML = historyHtml || '<p style="color: var(--text-secondary);">No chat sessions yet.</p>';
-        }
-
-        function loadChatMessages(sessionId) {
-            const messages = DB.chatMessages.filter(m => m.sessionId === sessionId);
-            const html = messages.map(msg => `
-                <div class="message ${msg.sender === 'user' ? 'user' : ''}">
-                    <div class="message-content">
-                        <div class="message-sender">${msg.sender}</div>
-                        <p class="message-text">${msg.text}</p>
-                        <div class="message-time">${new Date(msg.sentAt).toLocaleTimeString()}</div>
-                    </div>
-                </div>
-            `).join('');
-
-            document.getElementById('chatMessages').innerHTML = html;
-            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        function showCoursesContent() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('coursesContent').style.display = 'block';
+            document.getElementById('userNameDisplay').textContent = DB.currentUser.fullName;
+            loadCoursesGrid();
         }
 
         // ============================================
         // COURSES
         // ============================================
 
-        let selectedCourseId = null;
-
-        function viewCourse(courseId) {
-            selectedCourseId = courseId;
-            const course = DB.courses.find(c => c.id === courseId);
-
-            document.getElementById('modalTitle').textContent = course.title;
-            document.getElementById('modalBody').innerHTML = `
-                <div class="form-group">
-                    <label>Instructor</label>
-                    <input type="text" value="${course.instructor}" disabled>
+        function loadCoursesGrid() {
+            const html = DB.courses.map(course => `
+                <div class="service-card">
+                    <div class="service-icon">🎓</div>
+                    <h3>${course.title}</h3>
+                    <p>${course.description}</p>
+                    <div class="service-meta">
+                        <span>${course.level}</span>
+                        <span>${course.duration} weeks</span>
+                        <span>$${course.price}</span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Level</label>
-                    <input type="text" value="${course.level}" disabled>
-                </div>
-                <div class="form-group">
-                    <label>Duration</label>
-                    <input type="text" value="${course.duration} weeks" disabled>
-                </div>
-                <div class="form-group">
-                    <label>Price</label>
-                    <input type="text" value="$${course.price}" disabled>
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea disabled>${course.description}</textarea>
-                </div>
-            `;
+            `).join('');
 
-            document.getElementById('courseModal').classList.add('active');
-        }
-
-        function applyCourse() {
-            const user = DB.users.find(u => u.id === DB.currentUser.id);
-            const existingApp = DB.applications.find(a => a.userId === user.id && a.courseId === selectedCourseId);
-
-            if (existingApp) {
-                alert('You have already applied for this course');
-                return;
-            }
-
-            closeModal('courseModal');
-            document.getElementById('applicationModal').classList.add('active');
-        }
-
-        function submitApplication() {
-            const motivation = document.getElementById('appMotivation').value;
-            const experience = document.getElementById('appExperience').value;
-            const outcomes = document.getElementById('appOutcomes').value;
-
-            if (!motivation || !outcomes) {
-                alert('Please fill in motivation and expected outcomes');
-                return;
-            }
-
-            const user = DB.users.find(u => u.id === DB.currentUser.id);
-            const application = {
-                id: DB.applications.length + 1,
-                userId: user.id,
-                courseId: selectedCourseId,
-                motivation,
-                experience,
-                outcomes,
-                status: 'pending',
-                appliedAt: new Date().toISOString()
-            };
-
-            DB.applications.push(application);
-            saveData();
-            closeModal('applicationModal');
-            clearApplicationForm();
-            showMessage('Application submitted successfully! You will be reviewed soon.', 'success');
-        }
-
-        function clearApplicationForm() {
-            document.getElementById('appMotivation').value = '';
-            document.getElementById('appExperience').value = '';
-            document.getElementById('appOutcomes').value = '';
+            document.getElementById('coursesList').innerHTML = html;
         }
 
         // ============================================
-        // CHAT
+        // ANALYSIS SUBMISSION
         // ============================================
 
-        function startChat() {
-            const topic = document.getElementById('chatTopic').value;
-            const message = document.getElementById('chatMessage').value;
+        function submitAnalysis(e) {
+            e.preventDefault();
+            const analysisType = document.getElementById('analysisType').value;
+            const projectName = document.getElementById('projectName').value;
+            const researchDesc = document.getElementById('researchDesc').value;
+            const email = document.getElementById('analysisEmail').value;
+            const sampleSize = document.getElementById('sampleSize').value;
 
-            if (!topic || !message) {
-                alert('Please fill in both topic and question');
-                return;
-            }
-
-            const experts = ['Dr. Sarah Khan', 'Dr. James Liu', 'Dr. Priya Sharma'];
-            const randomExpert = experts[Math.floor(Math.random() * experts.length)];
-
-            const session = {
-                id: DB.chatSessions.length + 1,
-                userId: DB.currentUser.id,
-                topic,
-                expertName: randomExpert,
-                status: 'active',
-                createdAt: new Date().toISOString()
+            const request = {
+                id: DB.analysisRequests.length + 1,
+                analysisType,
+                projectName,
+                researchDesc,
+                email,
+                sampleSize,
+                status: 'submitted',
+                submittedAt: new Date().toISOString()
             };
 
-            // Close previous active sessions
-            DB.chatSessions.forEach(s => {
-                if (s.userId === DB.currentUser.id && s.status === 'active') {
-                    s.status = 'closed';
-                }
-            });
-
-            DB.chatSessions.push(session);
-
-            // Add user message
-            DB.chatMessages.push({
-                id: DB.chatMessages.length + 1,
-                sessionId: session.id,
-                userId: DB.currentUser.id,
-                sender: 'You',
-                text: message,
-                sentAt: new Date().toISOString()
-            });
-
-            // Simulate expert response
-            setTimeout(() => {
-                DB.chatMessages.push({
-                    id: DB.chatMessages.length + 1,
-                    sessionId: session.id,
-                    userId: DB.currentUser.id,
-                    sender: randomExpert,
-                    text: 'Great question! Thank you for reaching out. I\'ll help you with this topic. ' + generateExpertResponse(topic),
-                    sentAt: new Date(Date.now() + 2000).toISOString()
-                });
-                saveData();
-                loadChatMessages(session.id);
-            }, 2000);
-
-            saveData();
-            document.getElementById('chatTopic').value = '';
-            document.getElementById('chatMessage').value = '';
-            loadChat();
-            showMessage('Chat session started! An expert will respond shortly.', 'success');
-        }
-
-        function generateExpertResponse(topic) {
-            const responses = {
-                'k-mer': 'K-mers are crucial for GWAS analysis. Let me share some insights about their application in genome-wide association studies.',
-                'gwas': 'GWAS is a powerful approach for identifying genetic variants. We can discuss the methodology in detail.',
-                'annotation': 'Genome annotation is fundamental for understanding genomic features. I recommend starting with SnpEff.',
-                'rna': 'RNA-seq analysis involves several important steps. Let\'s go through the best practices together.',
-                'default': 'That\'s an interesting topic. Let me help you with the best approach.'
-            };
-
-            for (let [key, response] of Object.entries(responses)) {
-                if (topic.toLowerCase().includes(key)) return response;
-            }
-            return responses.default;
-        }
-
-        function sendMessage() {
-            const text = document.getElementById('messageInput').value;
-            if (!text) return;
-
-            const activeSession = DB.chatSessions.find(s => s.userId === DB.currentUser.id && s.status === 'active');
-            if (!activeSession) {
-                alert('No active chat session');
-                return;
-            }
-
-            DB.chatMessages.push({
-                id: DB.chatMessages.length + 1,
-                sessionId: activeSession.id,
-                userId: DB.currentUser.id,
-                sender: 'You',
-                text,
-                sentAt: new Date().toISOString()
-            });
-
-            document.getElementById('messageInput').value = '';
-            loadChatMessages(activeSession.id);
+            DB.analysisRequests.push(request);
             saveData();
 
-            // Simulate expert response
-            const expert = activeSession.expertName;
-            setTimeout(() => {
-                DB.chatMessages.push({
-                    id: DB.chatMessages.length + 1,
-                    sessionId: activeSession.id,
-                    userId: DB.currentUser.id,
-                    sender: expert,
-                    text: 'Thanks for your question. ' + generateExpertResponse(text),
-                    sentAt: new Date().toISOString()
-                });
-                saveData();
-                loadChatMessages(activeSession.id);
-            }, 2000);
+            showMessage(`Analysis request submitted! Reference: #${request.id}. We'll contact you at ${email} with results.`, 'success', 'analysisMessage');
+            document.querySelector('.query-form').reset();
+        }
+
+        // ============================================
+        // FAQ
+        // ============================================
+
+        function toggleFAQ(element) {
+            const item = element.parentElement;
+            document.querySelectorAll('.faq-item').forEach(el => {
+                if (el !== item) el.classList.remove('active');
+            });
+            item.classList.toggle('active');
         }
 
         // ============================================
         // UTILITIES
         // ============================================
 
-        function showMessage(text, type, elementId = null) {
-            const msgEl = elementId ? document.getElementById(elementId) : document.createElement('div');
-            msgEl.innerHTML = `<div class="alert alert-${type}">${text}</div>`;
-            if (!elementId) {
-                document.querySelector('main').insertBefore(msgEl, document.querySelector('main').firstChild);
-                setTimeout(() => msgEl.remove(), 5000);
+        function showMessage(text, type, elementId) {
+            const el = document.getElementById(elementId);
+            el.innerHTML = `<div class="message ${type}">${text}</div>`;
+            if (type === 'success') {
+                setTimeout(() => el.innerHTML = '', 5000);
             }
         }
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
+        function showMessage(text, type) {
+            alert(text);
         }
 
         // ============================================
@@ -1384,17 +1463,6 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             initializeData();
-
-            if (DB.currentUser) {
-                updateUIForLoggedIn();
-            }
-
-            // Close modals on background click
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) modal.classList.remove('active');
-                });
-            });
         });
     </script>
 </body>
