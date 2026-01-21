@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenomeAI Hub - Bioinformatics Training Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #1976D2;
+            --accent-color: #FF6B6B;
+            --dark-bg: #0d1117;
+            --light-bg: #161b22;
+            --text-primary: #c9d1d9;
+            --text-secondary: #8b949e;
+            --border-color: #30363d;
+            --success: #238636;
+            --warning: #d29922;
+            --error: #f85149;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--light-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .btn-logout {
+            background: var(--error);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-logout:hover {
+            background: #da3633;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary-color);
+        }
+
+        .btn-secondary {
+            background: var(--light-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border-color);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #2ea043;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--light-bg);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group input {
+            width: auto;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .card-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .badge-beginner {
+            background: rgba(35, 134, 54, 0.2);
+            color: #3fb950;
+        }
+
+        .badge-intermediate {
+            background: rgba(210, 153, 34, 0.2);
+            color: #d29922;
+        }
+
+        .badge-advanced {
+            background: rgba(248, 81, 73, 0.2);
+            color: #f85149;
+        }
+
+        .badge-pending {
+            background: rgba(210, 153, 34, 0.2);
+            color: #d29922;
+        }
+
+        .badge-approved {
+            background: rgba(35, 134, 54, 0.2);
+            color: #3fb950;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Messages */
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: rgba(35, 134, 54, 0.2);
+            color: #3fb950;
+            border: 1px solid rgba(35, 134, 54, 0.5);
+        }
+
+        .alert-error {
+            background: rgba(248, 81, 73, 0.2);
+            color: #f85149;
+            border: 1px solid rgba(248, 81, 73, 0.5);
+        }
+
+        .alert-info {
+            background: rgba(33, 150, 243, 0.2);
+            color: #58a6ff;
+            border: 1px solid rgba(33, 150, 243, 0.5);
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Chat */
+        .chat-container {
+            background: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .message {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            background: var(--light-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            max-width: 70%;
+        }
+
+        .message.user .message-content {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .message-sender {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+        }
+
+        .message-text {
+            margin: 0;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        .chat-input-area {
+            border-top: 1px solid var(--border-color);
+            padding: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+        }
+
+        .chat-input-area button {
+            padding: 0.75rem 1.5rem;
+        }
+
+        /* Filters */
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group select {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* Table */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        th {
+            background: var(--light-bg);
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:hover {
+            background: rgba(33, 150, 243, 0.1);
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+
+            .chat-container {
+                height: 400px;
+            }
+
+            .message-content {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="#" class="nav-brand">🧬 GenomeAI Hub</a>
+            <div class="nav-links" id="navLinks">
+                <a href="#" class="nav-link" id="authLink" onclick="showSection('auth'); return false;">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Auth Section -->
+        <div id="auth" class="section active">
+            <div class="grid">
+                <div style="max-width: 400px; margin: 2rem auto; width: 100%;">
+                    <!-- Signup Form -->
+                    <div id="signupForm" style="display: none;">
+                        <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Create Account</h2>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="signupFullName" placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="signupEmail" placeholder="john@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="signupPassword" placeholder="Min 6 characters">
+                        </div>
+                        <div class="form-group">
+                            <label>Organization</label>
+                            <input type="text" id="signupOrg" placeholder="Your University/Company">
+                        </div>
+                        <div class="form-group">
+                            <label>Expertise Level</label>
+                            <select id="signupLevel">
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate" selected>Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="signup()">Create Account</button>
+                        <p style="text-align: center; margin-top: 1rem;">
+                            Already have account? <a href="#" onclick="toggleAuthForm(); return false;" style="color: var(--primary-color);">Login</a>
+                        </p>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div id="loginForm">
+                        <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Login</h2>
+                        <div id="loginMessage"></div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="loginEmail" placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="loginPassword" placeholder="Your password">
+                        </div>
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="rememberMe">
+                            <label style="margin: 0;">Remember me</label>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;" onclick="login()">Login</button>
+                        
+                        <hr style="border: none; border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
+                        
+                        <p style="text-align: center; margin-bottom: 1rem;">Test Account:</p>
+                        <p style="text-align: center; color: var(--text-secondary); font-size: 0.9rem;">
+                            Email: <strong>demo@example.com</strong><br>
+                            Password: <strong>Demo123</strong>
+                        </p>
+                        
+                        <p style="text-align: center; margin-top: 1rem;">
+                            New here? <a href="#" onclick="toggleAuthForm(); return false;" style="color: var(--primary-color);">Sign up</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="section">
+            <h2 style="margin-bottom: 1.5rem;">Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="statCourses">0</div>
+                    <div class="stat-label">Courses Applied</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statChats">0</div>
+                    <div class="stat-label">Chat Sessions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="statMessages">0</div>
+                    <div class="stat-label">Messages</div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Recent Applications</h3>
+            <div id="recentApps"></div>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Recent Chats</h3>
+            <div id="recentChats"></div>
+        </div>
+
+        <!-- Courses Section -->
+        <div id="courses" class="section">
+            <h2 style="margin-bottom: 1.5rem;">Training Courses</h2>
+            
+            <div class="filter-group">
+                <select id="levelFilter" onchange="filterCourses()">
+                    <option value="">All Levels</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                </select>
+            </div>
+
+            <div class="grid grid-2" id="coursesList"></div>
+        </div>
+
+        <!-- Profile Section -->
+        <div id="profile" class="section">
+            <h2 style="margin-bottom: 1.5rem;">User Profile</h2>
+            
+            <div style="max-width: 600px;">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="profileFullName">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="profileEmail" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Organization</label>
+                    <input type="text" id="profileOrg">
+                </div>
+                <div class="form-group">
+                    <label>Expertise Level</label>
+                    <select id="profileLevel">
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="updateProfile()">Save Changes</button>
+            </div>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">My Applications</h3>
+            <div id="myApplications"></div>
+        </div>
+
+        <!-- Chat Section -->
+        <div id="chat" class="section">
+            <h2 style="margin-bottom: 1.5rem;">Expert Chat</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                <div>
+                    <h3 style="margin-bottom: 1rem;">New Chat Session</h3>
+                    <div class="form-group">
+                        <label>Topic</label>
+                        <input type="text" id="chatTopic" placeholder="e.g., k-mer GWAS Analysis">
+                    </div>
+                    <div class="form-group">
+                        <label>Your Question</label>
+                        <textarea id="chatMessage" placeholder="Ask your question to an expert..."></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="startChat()">Start Chat</button>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Active Chat</h3>
+                    <div id="activeChatInfo" style="color: var(--text-secondary); padding: 1rem; text-align: center;">
+                        No active chat. Start one to begin!
+                    </div>
+                </div>
+            </div>
+
+            <div id="chatContainer" style="display: none;">
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-input-area">
+                        <input type="text" id="messageInput" placeholder="Type a message...">
+                        <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Chat History</h3>
+            <div id="chatHistory"></div>
+        </div>
+    </main>
+
+    <!-- Course Detail Modal -->
+    <div id="courseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <button class="modal-close" onclick="closeModal('courseModal')">&times;</button>
+            </div>
+            <div id="modalBody"></div>
+            <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                <button class="btn btn-primary" onclick="applyCourse()">Apply Now</button>
+                <button class="btn btn-secondary" onclick="closeModal('courseModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Modal -->
+    <div id="applicationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Course Application</h2>
+                <button class="modal-close" onclick="closeModal('applicationModal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <label>What's your motivation for this course?</label>
+                <textarea id="appMotivation" placeholder="Explain why you want to take this course..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Previous Experience (Optional)</label>
+                <textarea id="appExperience" placeholder="Describe your relevant experience..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Expected Outcomes</label>
+                <textarea id="appOutcomes" placeholder="What do you hope to learn?..."></textarea>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-success" onclick="submitApplication()">Submit Application</button>
+                <button class="btn btn-secondary" onclick="closeModal('applicationModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // DATA MANAGEMENT
+        // ============================================
+
+        const DB = {
+            users: JSON.parse(localStorage.getItem('users')) || [],
+            courses: JSON.parse(localStorage.getItem('courses')) || [],
+            applications: JSON.parse(localStorage.getItem('applications')) || [],
+            chatSessions: JSON.parse(localStorage.getItem('chatSessions')) || [],
+            chatMessages: JSON.parse(localStorage.getItem('chatMessages')) || [],
+            currentUser: JSON.parse(localStorage.getItem('currentUser')) || null
+        };
+
+        // Initialize data if empty
+        function initializeData() {
+            if (DB.users.length === 0) {
+                DB.users.push({
+                    id: 1,
+                    email: 'demo@example.com',
+                    password: hashPassword('Demo123'),
+                    fullName: 'Demo User',
+                    organization: 'Demo Lab',
+                    level: 'intermediate',
+                    createdAt: new Date().toISOString()
+                });
+                saveData();
+            }
+
+            if (DB.courses.length === 0) {
+                DB.courses = [
+                    {
+                        id: 1,
+                        title: 'k-mer GWAS Analysis',
+                        description: 'Learn advanced k-mer based GWAS techniques for genome-wide association studies using kGWASflow pipeline.',
+                        level: 'advanced',
+                        duration: 8,
+                        instructor: 'Dr. Sarah Khan',
+                        participants: 28,
+                        price: 199
+                    },
+                    {
+                        id: 2,
+                        title: 'Genome Annotation & Variant Calling',
+                        description: 'Master genome annotation using SnpEff and variant calling pipelines for NGS data analysis.',
+                        level: 'intermediate',
+                        duration: 6,
+                        instructor: 'Dr. James Liu',
+                        participants: 35,
+                        price: 149
+                    },
+                    {
+                        id: 3,
+                        title: 'RNA-Seq Data Analysis',
+                        description: 'Complete workflow for RNA-seq data processing, QC, alignment, and expression quantification.',
+                        level: 'beginner',
+                        duration: 6,
+                        instructor: 'Dr. Priya Sharma',
+                        participants: 42,
+                        price: 129
+                    },
+                    {
+                        id: 4,
+                        title: 'Population Genomics',
+                        description: 'Population structure analysis, FST calculations, and evolutionary genomics fundamentals.',
+                        level: 'intermediate',
+                        duration: 7,
+                        instructor: 'Dr. Michael Chen',
+                        participants: 22,
+                        price: 169
+                    },
+                    {
+                        id: 5,
+                        title: 'Pangenome Construction & Analysis',
+                        description: 'Build and analyze pangenomes for crop species using modern bioinformatics tools.',
+                        level: 'advanced',
+                        duration: 8,
+                        instructor: 'Dr. Rajesh Patel',
+                        participants: 18,
+                        price: 199
+                    },
+                    {
+                        id: 6,
+                        title: 'Bioinformatics Pipeline Development',
+                        description: 'Design production-grade bioinformatics pipelines using Snakemake and containerization.',
+                        level: 'intermediate',
+                        duration: 7,
+                        instructor: 'Dr. Lisa Anderson',
+                        participants: 25,
+                        price: 179
+                    }
+                ];
+                saveData();
+            }
+        }
+
+        function saveData() {
+            localStorage.setItem('users', JSON.stringify(DB.users));
+            localStorage.setItem('courses', JSON.stringify(DB.courses));
+            localStorage.setItem('applications', JSON.stringify(DB.applications));
+            localStorage.setItem('chatSessions', JSON.stringify(DB.chatSessions));
+            localStorage.setItem('chatMessages', JSON.stringify(DB.chatMessages));
+            localStorage.setItem('currentUser', JSON.stringify(DB.currentUser));
+        }
+
+        // Simple password hashing (for demo - use proper hashing in production)
+        function hashPassword(pwd) {
+            return btoa(pwd);
+        }
+
+        function verifyPassword(pwd, hash) {
+            return hashPassword(pwd) === hash;
+        }
+
+        // ============================================
+        // AUTHENTICATION
+        // ============================================
+
+        function toggleAuthForm() {
+            const signup = document.getElementById('signupForm');
+            const login = document.getElementById('loginForm');
+            signup.style.display = signup.style.display === 'none' ? 'block' : 'none';
+            login.style.display = login.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function signup() {
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const fullName = document.getElementById('signupFullName').value;
+            const org = document.getElementById('signupOrg').value;
+            const level = document.getElementById('signupLevel').value;
+
+            if (!email || !password || !fullName) {
+                alert('Please fill all required fields');
+                return;
+            }
+
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters');
+                return;
+            }
+
+            if (DB.users.find(u => u.email === email)) {
+                alert('Email already registered');
+                return;
+            }
+
+            const newUser = {
+                id: DB.users.length + 1,
+                email,
+                password: hashPassword(password),
+                fullName,
+                organization: org,
+                level,
+                createdAt: new Date().toISOString()
+            };
+
+            DB.users.push(newUser);
+            DB.currentUser = { id: newUser.id, email: newUser.email, fullName: newUser.fullName };
+            saveData();
+            showMessage('Account created successfully!', 'success');
+            setTimeout(() => updateUIForLoggedIn(), 1000);
+        }
+
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            const user = DB.users.find(u => u.email === email);
+            if (!user || !verifyPassword(password, user.password)) {
+                showMessage('Invalid email or password', 'error', 'loginMessage');
+                return;
+            }
+
+            DB.currentUser = { id: user.id, email: user.email, fullName: user.fullName };
+            saveData();
+            showMessage('Login successful!', 'success', 'loginMessage');
+            setTimeout(() => updateUIForLoggedIn(), 1000);
+        }
+
+        function logout() {
+            DB.currentUser = null;
+            saveData();
+            location.reload();
+        }
+
+        function updateUIForLoggedIn() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.innerHTML = `
+                <a href="#" class="nav-link" onclick="showSection('dashboard'); return false;">Dashboard</a>
+                <a href="#" class="nav-link" onclick="showSection('courses'); return false;">Courses</a>
+                <a href="#" class="nav-link" onclick="showSection('chat'); return false;">Chat</a>
+                <a href="#" class="nav-link" onclick="showSection('profile'); return false;">Profile</a>
+                <button class="btn-logout" onclick="logout()">Logout</button>
+            `;
+            showSection('dashboard');
+            loadDashboard();
+        }
+
+        // ============================================
+        // SECTIONS
+        // ============================================
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+
+            if (sectionId === 'courses') loadCourses();
+            else if (sectionId === 'dashboard') loadDashboard();
+            else if (sectionId === 'profile') loadProfile();
+            else if (sectionId === 'chat') loadChat();
+        }
+
+        function loadDashboard() {
+            const apps = DB.applications.filter(a => a.userId === DB.currentUser.id);
+            const chats = DB.chatSessions.filter(c => c.userId === DB.currentUser.id);
+            const messages = DB.chatMessages.filter(m => m.userId === DB.currentUser.id);
+
+            document.getElementById('statCourses').textContent = apps.length;
+            document.getElementById('statChats').textContent = chats.length;
+            document.getElementById('statMessages').textContent = messages.length;
+
+            const recentAppsHtml = apps.slice(-3).reverse().map(app => {
+                const course = DB.courses.find(c => c.id === app.courseId);
+                return `
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">${course.title}</div>
+                                <div class="card-subtitle">Applied on ${new Date(app.appliedAt).toLocaleDateString()}</div>
+                            </div>
+                            <span class="badge badge-${app.status}">${app.status}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('recentApps').innerHTML = recentAppsHtml || '<p style="color: var(--text-secondary);">No applications yet. Start applying to courses!</p>';
+
+            const recentChatsHtml = chats.slice(-3).reverse().map(chat => `
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">${chat.topic}</div>
+                            <div class="card-subtitle">Expert: ${chat.expertName || 'Awaiting assignment'}</div>
+                        </div>
+                        <span class="badge badge-${chat.status}">${chat.status}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('recentChats').innerHTML = recentChatsHtml || '<p style="color: var(--text-secondary);">No chat sessions yet. Start a new chat!</p>';
+        }
+
+        function loadCourses() {
+            const level = document.getElementById('levelFilter').value;
+            let courses = DB.courses;
+            if (level) courses = courses.filter(c => c.level === level);
+
+            const html = courses.map(course => `
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">${course.title}</div>
+                            <div class="card-subtitle">by ${course.instructor}</div>
+                        </div>
+                        <span class="badge badge-${course.level}">${course.level}</span>
+                    </div>
+                    <p>${course.description}</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div>
+                            <span style="color: var(--text-secondary);">⏱️ Duration:</span> ${course.duration} weeks
+                        </div>
+                        <div>
+                            <span style="color: var(--text-secondary);">👥 Participants:</span> ${course.participants}
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="viewCourse(${course.id})">View Details</button>
+                </div>
+            `).join('');
+
+            document.getElementById('coursesList').innerHTML = html;
+        }
+
+        function filterCourses() {
+            loadCourses();
+        }
+
+        function loadProfile() {
+            const user = DB.users.find(u => u.id === DB.currentUser.id);
+            document.getElementById('profileFullName').value = user.fullName;
+            document.getElementById('profileEmail').value = user.email;
+            document.getElementById('profileOrg').value = user.organization;
+            document.getElementById('profileLevel').value = user.level;
+
+            const apps = DB.applications.filter(a => a.userId === user.id);
+            const appHtml = apps.map(app => {
+                const course = DB.courses.find(c => c.id === app.courseId);
+                return `
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <strong>${course.title}</strong>
+                                <div style="color: var(--text-secondary); font-size: 0.9rem;">Applied: ${new Date(app.appliedAt).toLocaleDateString()}</div>
+                            </div>
+                            <span class="badge badge-${app.status}">${app.status}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('myApplications').innerHTML = appHtml || '<p style="color: var(--text-secondary);">No applications yet.</p>';
+        }
+
+        function updateProfile() {
+            const user = DB.users.find(u => u.id === DB.currentUser.id);
+            user.fullName = document.getElementById('profileFullName').value;
+            user.organization = document.getElementById('profileOrg').value;
+            user.level = document.getElementById('profileLevel').value;
+            DB.currentUser.fullName = user.fullName;
+            saveData();
+            showMessage('Profile updated successfully!', 'success');
+        }
+
+        function loadChat() {
+            const sessions = DB.chatSessions.filter(s => s.userId === DB.currentUser.id);
+            const activeSession = sessions.find(s => s.status === 'active');
+
+            if (activeSession) {
+                document.getElementById('activeChatInfo').innerHTML = `
+                    <div style="text-align: left;">
+                        <div><strong>${activeSession.topic}</strong></div>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">Expert: ${activeSession.expertName}</div>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">Status: ${activeSession.status}</div>
+                    </div>
+                `;
+                document.getElementById('chatContainer').style.display = 'block';
+                loadChatMessages(activeSession.id);
+            } else {
+                document.getElementById('chatContainer').style.display = 'none';
+            }
+
+            const historyHtml = sessions.slice(-5).reverse().map(session => `
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>
+                            <strong>${session.topic}</strong>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem;">Expert: ${session.expertName}</div>
+                        </div>
+                        <span class="badge badge-${session.status}">${session.status}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('chatHistory').innerHTML = historyHtml || '<p style="color: var(--text-secondary);">No chat sessions yet.</p>';
+        }
+
+        function loadChatMessages(sessionId) {
+            const messages = DB.chatMessages.filter(m => m.sessionId === sessionId);
+            const html = messages.map(msg => `
+                <div class="message ${msg.sender === 'user' ? 'user' : ''}">
+                    <div class="message-content">
+                        <div class="message-sender">${msg.sender}</div>
+                        <p class="message-text">${msg.text}</p>
+                        <div class="message-time">${new Date(msg.sentAt).toLocaleTimeString()}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('chatMessages').innerHTML = html;
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+
+        // ============================================
+        // COURSES
+        // ============================================
+
+        let selectedCourseId = null;
+
+        function viewCourse(courseId) {
+            selectedCourseId = courseId;
+            const course = DB.courses.find(c => c.id === courseId);
+
+            document.getElementById('modalTitle').textContent = course.title;
+            document.getElementById('modalBody').innerHTML = `
+                <div class="form-group">
+                    <label>Instructor</label>
+                    <input type="text" value="${course.instructor}" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Level</label>
+                    <input type="text" value="${course.level}" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Duration</label>
+                    <input type="text" value="${course.duration} weeks" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="text" value="$${course.price}" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea disabled>${course.description}</textarea>
+                </div>
+            `;
+
+            document.getElementById('courseModal').classList.add('active');
+        }
+
+        function applyCourse() {
+            const user = DB.users.find(u => u.id === DB.currentUser.id);
+            const existingApp = DB.applications.find(a => a.userId === user.id && a.courseId === selectedCourseId);
+
+            if (existingApp) {
+                alert('You have already applied for this course');
+                return;
+            }
+
+            closeModal('courseModal');
+            document.getElementById('applicationModal').classList.add('active');
+        }
+
+        function submitApplication() {
+            const motivation = document.getElementById('appMotivation').value;
+            const experience = document.getElementById('appExperience').value;
+            const outcomes = document.getElementById('appOutcomes').value;
+
+            if (!motivation || !outcomes) {
+                alert('Please fill in motivation and expected outcomes');
+                return;
+            }
+
+            const user = DB.users.find(u => u.id === DB.currentUser.id);
+            const application = {
+                id: DB.applications.length + 1,
+                userId: user.id,
+                courseId: selectedCourseId,
+                motivation,
+                experience,
+                outcomes,
+                status: 'pending',
+                appliedAt: new Date().toISOString()
+            };
+
+            DB.applications.push(application);
+            saveData();
+            closeModal('applicationModal');
+            clearApplicationForm();
+            showMessage('Application submitted successfully! You will be reviewed soon.', 'success');
+        }
+
+        function clearApplicationForm() {
+            document.getElementById('appMotivation').value = '';
+            document.getElementById('appExperience').value = '';
+            document.getElementById('appOutcomes').value = '';
+        }
+
+        // ============================================
+        // CHAT
+        // ============================================
+
+        function startChat() {
+            const topic = document.getElementById('chatTopic').value;
+            const message = document.getElementById('chatMessage').value;
+
+            if (!topic || !message) {
+                alert('Please fill in both topic and question');
+                return;
+            }
+
+            const experts = ['Dr. Sarah Khan', 'Dr. James Liu', 'Dr. Priya Sharma'];
+            const randomExpert = experts[Math.floor(Math.random() * experts.length)];
+
+            const session = {
+                id: DB.chatSessions.length + 1,
+                userId: DB.currentUser.id,
+                topic,
+                expertName: randomExpert,
+                status: 'active',
+                createdAt: new Date().toISOString()
+            };
+
+            // Close previous active sessions
+            DB.chatSessions.forEach(s => {
+                if (s.userId === DB.currentUser.id && s.status === 'active') {
+                    s.status = 'closed';
+                }
+            });
+
+            DB.chatSessions.push(session);
+
+            // Add user message
+            DB.chatMessages.push({
+                id: DB.chatMessages.length + 1,
+                sessionId: session.id,
+                userId: DB.currentUser.id,
+                sender: 'You',
+                text: message,
+                sentAt: new Date().toISOString()
+            });
+
+            // Simulate expert response
+            setTimeout(() => {
+                DB.chatMessages.push({
+                    id: DB.chatMessages.length + 1,
+                    sessionId: session.id,
+                    userId: DB.currentUser.id,
+                    sender: randomExpert,
+                    text: 'Great question! Thank you for reaching out. I\'ll help you with this topic. ' + generateExpertResponse(topic),
+                    sentAt: new Date(Date.now() + 2000).toISOString()
+                });
+                saveData();
+                loadChatMessages(session.id);
+            }, 2000);
+
+            saveData();
+            document.getElementById('chatTopic').value = '';
+            document.getElementById('chatMessage').value = '';
+            loadChat();
+            showMessage('Chat session started! An expert will respond shortly.', 'success');
+        }
+
+        function generateExpertResponse(topic) {
+            const responses = {
+                'k-mer': 'K-mers are crucial for GWAS analysis. Let me share some insights about their application in genome-wide association studies.',
+                'gwas': 'GWAS is a powerful approach for identifying genetic variants. We can discuss the methodology in detail.',
+                'annotation': 'Genome annotation is fundamental for understanding genomic features. I recommend starting with SnpEff.',
+                'rna': 'RNA-seq analysis involves several important steps. Let\'s go through the best practices together.',
+                'default': 'That\'s an interesting topic. Let me help you with the best approach.'
+            };
+
+            for (let [key, response] of Object.entries(responses)) {
+                if (topic.toLowerCase().includes(key)) return response;
+            }
+            return responses.default;
+        }
+
+        function sendMessage() {
+            const text = document.getElementById('messageInput').value;
+            if (!text) return;
+
+            const activeSession = DB.chatSessions.find(s => s.userId === DB.currentUser.id && s.status === 'active');
+            if (!activeSession) {
+                alert('No active chat session');
+                return;
+            }
+
+            DB.chatMessages.push({
+                id: DB.chatMessages.length + 1,
+                sessionId: activeSession.id,
+                userId: DB.currentUser.id,
+                sender: 'You',
+                text,
+                sentAt: new Date().toISOString()
+            });
+
+            document.getElementById('messageInput').value = '';
+            loadChatMessages(activeSession.id);
+            saveData();
+
+            // Simulate expert response
+            const expert = activeSession.expertName;
+            setTimeout(() => {
+                DB.chatMessages.push({
+                    id: DB.chatMessages.length + 1,
+                    sessionId: activeSession.id,
+                    userId: DB.currentUser.id,
+                    sender: expert,
+                    text: 'Thanks for your question. ' + generateExpertResponse(text),
+                    sentAt: new Date().toISOString()
+                });
+                saveData();
+                loadChatMessages(activeSession.id);
+            }, 2000);
+        }
+
+        // ============================================
+        // UTILITIES
+        // ============================================
+
+        function showMessage(text, type, elementId = null) {
+            const msgEl = elementId ? document.getElementById(elementId) : document.createElement('div');
+            msgEl.innerHTML = `<div class="alert alert-${type}">${text}</div>`;
+            if (!elementId) {
+                document.querySelector('main').insertBefore(msgEl, document.querySelector('main').firstChild);
+                setTimeout(() => msgEl.remove(), 5000);
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeData();
+
+            if (DB.currentUser) {
+                updateUIForLoggedIn();
+            }
+
+            // Close modals on background click
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) modal.classList.remove('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
