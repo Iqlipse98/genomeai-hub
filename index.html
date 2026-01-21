@@ -1121,26 +1121,36 @@
                     <p class="form-link">Demo: <strong>demo@example.com</strong> / <strong>Demo123</strong></p>
                 </form>
 
-                <!-- Signup Form -->
+                <!-- Signup Form with OTP -->
                 <form id="signupForm" class="auth-form" onsubmit="signup(event)">
                     <div id="signupMessage"></div>
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" id="signupName" placeholder="John Doe" required>
+                    <div id="signupStep1">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="signupName" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="signupEmail" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="signupPassword" placeholder="Min 6 characters" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Organization</label>
+                            <input type="text" id="signupOrg" placeholder="Your University/Institute">
+                        </div>
+                        <button type="button" class="btn btn-primary" style="width: 100%;" onclick="sendOTP()">Send OTP to Email</button>
                     </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" id="signupEmail" placeholder="your@email.com" required>
+                    <div id="signupStep2" style="display: none;">
+                        <div class="form-group">
+                            <label>Enter OTP (Check your email)</label>
+                            <input type="text" id="otpInput" placeholder="6-digit OTP" maxlength="6" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Verify & Create Account</button>
+                        <button type="button" class="btn btn-secondary" style="width: 100%; margin-top: 0.5rem;" onclick="resetSignup()">Back</button>
                     </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="signupPassword" placeholder="Min 6 characters" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Organization</label>
-                        <input type="text" id="signupOrg" placeholder="Your University/Institute">
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
                 </form>
             </div>
 
@@ -1149,11 +1159,17 @@
                 <h2 class="section-title">Training Courses</h2>
                 <p class="section-subtitle">Learn bioinformatics from expert instructors</p>
 
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <div>Welcome, <strong id="userNameDisplay"></strong>!</div>
-                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                    <div style="font-size: 1.1rem;">Welcome, <strong id="userNameDisplay"></strong>!</div>
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button class="btn btn-secondary" onclick="openTab('coursesTab')">Courses</button>
+                        <button class="btn btn-secondary" onclick="openTab('applicationsTab')">My Applications</button>
+                        <button class="btn btn-secondary" onclick="openTab('chatTab')">Expert Chat</button>
+                        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                    </div>
                 </div>
 
+                <!-- Dashboard Stats -->
                 <div class="dashboard-grid">
                     <div class="stat-card">
                         <div class="stat-number" id="statCourses">0</div>
@@ -1165,11 +1181,47 @@
                     </div>
                     <div class="stat-card">
                         <div class="stat-number" id="statMessages">0</div>
-                        <div class="stat-label">Messages</div>
+                        <div class="stat-label">Total Messages</div>
                     </div>
                 </div>
 
-                <div class="services-grid" id="coursesList"></div>
+                <!-- COURSES TAB -->
+                <div id="coursesTab" class="content-tab" style="display: none;">
+                    <h3 style="font-size: 1.8rem; margin: 2rem 0 1.5rem;">Available Courses</h3>
+                    <div id="coursesList" class="services-grid"></div>
+                </div>
+
+                <!-- MY APPLICATIONS TAB -->
+                <div id="applicationsTab" class="content-tab" style="display: none;">
+                    <h3 style="font-size: 1.8rem; margin: 2rem 0 1.5rem;">My Applications</h3>
+                    <div id="applicationsList"></div>
+                </div>
+
+                <!-- EXPERT CHAT TAB -->
+                <div id="chatTab" class="content-tab" style="display: none;">
+                    <h3 style="font-size: 1.8rem; margin: 2rem 0 1.5rem;">Chat with Expert</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
+                        <div id="chatSessions"></div>
+                        <div id="chatWindow"></div>
+                    </div>
+                </div>
+
+                <!-- COURSE DETAILS MODAL -->
+                <div id="courseModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 2000; overflow-y: auto; padding: 2rem 0;">
+                    <div style="background: var(--card-bg); max-width: 900px; margin: 2rem auto; border-radius: 15px; padding: 2rem; border: 2px solid rgba(102, 126, 234, 0.2);">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 2rem;">
+                            <h2 id="modalCourseTitle" style="font-size: 2rem;"></h2>
+                            <button onclick="closeCourseModal()" style="background: none; border: none; color: white; font-size: 2rem; cursor: pointer;">✕</button>
+                        </div>
+
+                        <div id="courseDetailsContent"></div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+                            <div id="modulesList"></div>
+                            <div id="applicationForm"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1184,11 +1236,17 @@
             courses: JSON.parse(localStorage.getItem('tenacious_courses')) || [],
             applications: JSON.parse(localStorage.getItem('tenacious_applications')) || [],
             analysisRequests: JSON.parse(localStorage.getItem('tenacious_analysis')) || [],
-            currentUser: JSON.parse(localStorage.getItem('tenacious_currentUser')) || null
+            chatSessions: JSON.parse(localStorage.getItem('tenacious_chats')) || [],
+            emailLogs: JSON.parse(localStorage.getItem('tenacious_emails')) || [],
+            currentUser: JSON.parse(localStorage.getItem('tenacious_currentUser')) || null,
+            tempSignupData: null
         };
 
         // Initialize data
         function initializeData() {
+            if (!DB.chatSessions) DB.chatSessions = [];
+            if (!DB.emailLogs) DB.emailLogs = [];
+
             if (DB.users.length === 0) {
                 DB.users.push({
                     id: 1,
@@ -1273,6 +1331,8 @@
             localStorage.setItem('tenacious_courses', JSON.stringify(DB.courses));
             localStorage.setItem('tenacious_applications', JSON.stringify(DB.applications));
             localStorage.setItem('tenacious_analysis', JSON.stringify(DB.analysisRequests));
+            localStorage.setItem('tenacious_chats', JSON.stringify(DB.chatSessions));
+            localStorage.setItem('tenacious_emails', JSON.stringify(DB.emailLogs));
             localStorage.setItem('tenacious_currentUser', JSON.stringify(DB.currentUser));
         }
 
@@ -1375,16 +1435,163 @@
             document.getElementById('authContainer').style.display = 'none';
             document.getElementById('coursesContent').style.display = 'block';
             document.getElementById('userNameDisplay').textContent = DB.currentUser.fullName;
-            loadCoursesGrid();
+            openTab('coursesTab');
+            updateDashboard();
         }
 
         // ============================================
-        // COURSES
+        // OTP VERIFICATION
         // ============================================
+
+        function sendOTP() {
+            const email = document.getElementById('signupEmail').value;
+            const name = document.getElementById('signupName').value;
+            const password = document.getElementById('signupPassword').value;
+
+            if (!email || !name || !password) {
+                showMessage('Please fill all fields', 'error', 'signupMessage');
+                return;
+            }
+
+            if (password.length < 6) {
+                showMessage('Password must be at least 6 characters', 'error', 'signupMessage');
+                return;
+            }
+
+            if (DB.users.find(u => u.email === email)) {
+                showMessage('Email already registered', 'error', 'signupMessage');
+                return;
+            }
+
+            // Generate OTP
+            const otp = Math.floor(100000 + Math.random() * 900000).toString();
+            DB.tempSignupData = {
+                name,
+                email,
+                password,
+                org: document.getElementById('signupOrg').value,
+                otp,
+                timestamp: Date.now()
+            };
+
+            // Simulate sending email
+            console.log(`OTP for ${email}: ${otp}`);
+            alert(`📧 OTP sent to ${email}\n\n⏰ For DEMO: Use OTP: ${otp}\n\n(In production, this would be sent via email service)`);
+
+            document.getElementById('signupStep1').style.display = 'none';
+            document.getElementById('signupStep2').style.display = 'block';
+        }
+
+        function resetSignup() {
+            document.getElementById('signupStep1').style.display = 'block';
+            document.getElementById('signupStep2').style.display = 'none';
+            document.getElementById('signupForm').reset();
+            DB.tempSignupData = null;
+        }
+
+        // ============================================
+        // AUTHENTICATION (UPDATED)
+        // ============================================
+
+        function signup(e) {
+            e.preventDefault();
+            const enteredOTP = document.getElementById('otpInput').value;
+
+            if (!DB.tempSignupData) {
+                showMessage('Session expired. Please try again.', 'error', 'signupMessage');
+                return;
+            }
+
+            if (enteredOTP !== DB.tempSignupData.otp) {
+                showMessage('Invalid OTP. Please try again.', 'error', 'signupMessage');
+                return;
+            }
+
+            const { name, email, password, org } = DB.tempSignupData;
+
+            DB.users.push({
+                id: DB.users.length + 1,
+                email,
+                password: btoa(password),
+                fullName: name,
+                organization: org,
+                createdAt: new Date().toISOString()
+            });
+
+            DB.currentUser = { id: DB.users.length, email, fullName: name };
+            saveData();
+            
+            // Send welcome email notification
+            logEmailNotification(`Welcome to Tenacious! Your account has been created.`, email, 'account_creation');
+            
+            showMessage('Account created successfully!', 'success', 'signupMessage');
+            setTimeout(() => showCoursesContent(), 1000);
+        }
+
+        // ============================================
+        // COURSES & MODULES
+        // ============================================
+
+        const COURSE_MODULES = {
+            1: {
+                title: 'k-mer GWAS Analysis',
+                modules: [
+                    { id: 1, name: 'Fundamentals of k-mer Analysis', description: 'Understand k-mer concept, counting, and frequency analysis' },
+                    { id: 2, name: 'GWAS Methodology', description: 'Genome-wide association study principles and design' },
+                    { id: 3, name: 'kGWASflow Pipeline', description: 'Hands-on with kGWASflow tool and parameters' },
+                    { id: 4, name: 'Data Interpretation', description: 'Analyzing results and visualization techniques' }
+                ]
+            },
+            2: {
+                title: 'Genome Annotation & Variant Calling',
+                modules: [
+                    { id: 1, name: 'GFF3 Format & Standards', description: 'Understanding GFF3 file format and specifications' },
+                    { id: 2, name: 'SnpEff Annotation', description: 'Using SnpEff for variant annotation' },
+                    { id: 3, name: 'Variant Effects', description: 'Understanding different variant impact categories' },
+                    { id: 4, name: 'Quality Validation', description: 'Validating and filtering annotation results' }
+                ]
+            },
+            3: {
+                title: 'RNA-Seq Data Analysis',
+                modules: [
+                    { id: 1, name: 'Quality Control', description: 'FastQC, adapter trimming, and read filtering' },
+                    { id: 2, name: 'Read Alignment', description: 'Using BWA, HISAT2, and other aligners' },
+                    { id: 3, name: 'Expression Quantification', description: 'Counting and normalization methods' },
+                    { id: 4, name: 'Visualization & Analysis', description: 'DESeq2, visualization, and interpretation' }
+                ]
+            },
+            4: {
+                title: 'Population Genomics',
+                modules: [
+                    { id: 1, name: 'Population Structure', description: 'PCA, ADMIXTURE, and stratification analysis' },
+                    { id: 2, name: 'Diversity Metrics', description: 'π, FST, and nucleotide diversity calculations' },
+                    { id: 3, name: 'Evolutionary Analysis', description: 'Phylogenetic inference and dating' },
+                    { id: 4, name: 'Selection Detection', description: 'Identifying signatures of natural selection' }
+                ]
+            },
+            5: {
+                title: 'Pangenome Construction',
+                modules: [
+                    { id: 1, name: 'Pangenome Fundamentals', description: 'Core genome, accessory genes, and concepts' },
+                    { id: 2, name: 'Assembly & Alignment', description: 'Whole genome assembly and multiple alignment' },
+                    { id: 3, name: 'Pangenome Graph', description: 'Graph-based pangenome construction' },
+                    { id: 4, name: 'Analysis & Applications', description: 'Pangenome analysis for crop improvement' }
+                ]
+            },
+            6: {
+                title: 'Bioinformatics Pipeline Development',
+                modules: [
+                    { id: 1, name: 'Snakemake Basics', description: 'Workflow definition, rules, and execution' },
+                    { id: 2, name: 'Advanced Workflows', description: 'Conditional execution and complex pipelines' },
+                    { id: 3, name: 'Best Practices', description: 'Documentation, version control, and reproducibility' },
+                    { id: 4, name: 'Deployment & Scaling', description: 'Production pipelines and cluster execution' }
+                ]
+            }
+        };
 
         function loadCoursesGrid() {
             const html = DB.courses.map(course => `
-                <div class="service-card">
+                <div class="service-card" onclick="openCourseDetails(${course.id})" style="cursor: pointer;">
                     <div class="service-icon">🎓</div>
                     <h3>${course.title}</h3>
                     <p>${course.description}</p>
@@ -1393,10 +1600,333 @@
                         <span>${course.duration} weeks</span>
                         <span>$${course.price}</span>
                     </div>
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(102, 126, 234, 0.2); text-align: center;">
+                        <button class="btn btn-primary" style="width: 100%;">View Course & Apply</button>
+                    </div>
                 </div>
             `).join('');
 
             document.getElementById('coursesList').innerHTML = html;
+        }
+
+        function openCourseDetails(courseId) {
+            const course = DB.courses.find(c => c.id === courseId);
+            const modules = COURSE_MODULES[courseId];
+
+            document.getElementById('modalCourseTitle').textContent = course.title;
+
+            // Course details
+            document.getElementById('courseDetailsContent').innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+                    <div>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;"><strong>Instructor:</strong> ${course.instructor}</p>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;"><strong>Duration:</strong> ${course.duration} weeks</p>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;"><strong>Level:</strong> <span style="text-transform: capitalize;">${course.level}</span></p>
+                        <p style="color: var(--text-secondary);"><strong>Participants:</strong> ${course.participants} students</p>
+                    </div>
+                    <div>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;"><strong>Price:</strong> <span style="font-size: 1.5rem; background: var(--primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">$${course.price}</span></p>
+                        <p style="color: var(--text-secondary);">${course.description}</p>
+                    </div>
+                </div>
+            `;
+
+            // Modules list
+            document.getElementById('modulesList').innerHTML = `
+                <div style="background: rgba(102, 126, 234, 0.1); border-radius: 10px; padding: 1.5rem; border-left: 4px solid #667eea;">
+                    <h4 style="margin-bottom: 1rem; font-size: 1.2rem;">📚 Course Modules</h4>
+                    ${modules.modules.map((mod, idx) => `
+                        <div style="margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(102, 126, 234, 0.2);">
+                            <div style="display: flex; gap: 1rem;">
+                                <div style="background: #667eea; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 600;">${idx + 1}</div>
+                                <div>
+                                    <p style="font-weight: 600; margin-bottom: 0.3rem;">${mod.name}</p>
+                                    <p style="font-size: 0.9rem; color: var(--text-secondary);">${mod.description}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // Application form
+            const userApplication = DB.applications.find(a => a.userId === DB.currentUser.id && a.courseId === courseId);
+            
+            document.getElementById('applicationForm').innerHTML = userApplication ? `
+                <div style="background: rgba(16, 185, 129, 0.2); border-radius: 10px; padding: 1.5rem; border-left: 4px solid #10b981;">
+                    <h4 style="margin-bottom: 1rem; color: #10b981;">✓ Application Status</h4>
+                    <p style="color: var(--text-secondary); margin-bottom: 0.5rem;"><strong>Status:</strong> <span style="color: #10b981; font-weight: 600; text-transform: capitalize;">${userApplication.status}</span></p>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;"><strong>Applied:</strong> ${new Date(userApplication.appliedAt).toLocaleDateString()}</p>
+                    <button class="btn btn-secondary" style="width: 100%;" onclick="startChatWithExpert(${courseId})">💬 Chat with Expert</button>
+                </div>
+            ` : `
+                <form onsubmit="applyForCourse(event, ${courseId})" style="background: rgba(102, 126, 234, 0.1); border-radius: 10px; padding: 1.5rem; border-left: 4px solid #667eea;">
+                    <h4 style="margin-bottom: 1rem;">Apply for This Course</h4>
+                    <div class="form-group">
+                        <label>Motivation Statement</label>
+                        <textarea id="motivation" placeholder="Why do you want to take this course?" required style="min-height: 80px;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Current Experience Level</label>
+                        <select id="experience" required>
+                            <option value="">Select level</option>
+                            <option value="beginner">Beginner - New to bioinformatics</option>
+                            <option value="intermediate">Intermediate - Some experience</option>
+                            <option value="advanced">Advanced - Significant experience</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Expected Outcomes</label>
+                        <textarea id="outcomes" placeholder="What do you expect to achieve?" required style="min-height: 80px;"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Application</button>
+                </form>
+            `;
+
+            document.getElementById('courseModal').style.display = 'block';
+        }
+
+        function closeCourseModal() {
+            document.getElementById('courseModal').style.display = 'none';
+        }
+
+        function applyForCourse(e, courseId) {
+            e.preventDefault();
+            const course = DB.courses.find(c => c.id === courseId);
+            const application = {
+                id: DB.applications.length + 1,
+                courseId,
+                userId: DB.currentUser.id,
+                motivation: document.getElementById('motivation').value,
+                experience: document.getElementById('experience').value,
+                outcomes: document.getElementById('outcomes').value,
+                status: 'pending',
+                appliedAt: new Date().toISOString()
+            };
+
+            DB.applications.push(application);
+            saveData();
+
+            // Send email notification
+            logEmailNotification(
+                `New course application from ${DB.currentUser.fullName} for "${course.title}"\n\nMotivation: ${application.motivation}\n\nExperience: ${application.experience}\n\nExpected Outcomes: ${application.outcomes}`,
+                'instructor@tenacious.com',
+                'new_application'
+            );
+
+            showMessage('✓ Application submitted successfully! Expert will review soon.', 'success', 'signupMessage');
+            updateDashboard();
+            setTimeout(() => closeCourseModal(), 1500);
+        }
+
+        function loadApplicationsList() {
+            const userApps = DB.applications.filter(a => a.userId === DB.currentUser.id);
+            
+            if (userApps.length === 0) {
+                document.getElementById('applicationsList').innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">No applications yet. <a onclick="openTab(\'coursesTab\')" style="color: #667eea; cursor: pointer;">Apply for a course</a></p>';
+                return;
+            }
+
+            const html = userApps.map(app => {
+                const course = DB.courses.find(c => c.id === app.courseId);
+                return `
+                    <div style="background: var(--card-bg); border: 1px solid rgba(102, 126, 234, 0.2); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div style="flex: 1;">
+                                <h4 style="margin-bottom: 0.5rem;">${course.title}</h4>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">Status: <span style="color: ${app.status === 'approved' ? '#10b981' : app.status === 'pending' ? '#f59e0b' : '#f5576c'}; font-weight: 600; text-transform: capitalize;">${app.status}</span></p>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem;">Applied: ${new Date(app.appliedAt).toLocaleDateString()}</p>
+                            </div>
+                            <button class="btn btn-secondary" onclick="startChatWithExpert(${app.courseId})" style="white-space: nowrap;">💬 Chat</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('applicationsList').innerHTML = html;
+        }
+
+        // ============================================
+        // EXPERT CHAT
+        // ============================================
+
+        function startChatWithExpert(courseId) {
+            const course = DB.courses.find(c => c.id === courseId);
+            let chatSession = DB.chatSessions.find(s => s.userId === DB.currentUser.id && s.courseId === courseId);
+
+            if (!chatSession) {
+                chatSession = {
+                    id: DB.chatSessions.length + 1,
+                    userId: DB.currentUser.id,
+                    courseId,
+                    courseName: course.title,
+                    expertName: course.instructor,
+                    messages: [],
+                    createdAt: new Date().toISOString()
+                };
+                DB.chatSessions.push(chatSession);
+                saveData();
+            }
+
+            loadChatWindow(chatSession.id);
+        }
+
+        function loadChatSessions() {
+            const sessions = DB.chatSessions.filter(s => s.userId === DB.currentUser.id);
+            
+            if (sessions.length === 0) {
+                document.getElementById('chatSessions').innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 1rem;">No chat sessions. Apply for a course first.</p>';
+                return;
+            }
+
+            const html = sessions.map(session => `
+                <div onclick="loadChatWindow(${session.id})" style="background: var(--card-bg); border: 1px solid rgba(102, 126, 234, 0.2); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; cursor: pointer; transition: all 0.3s;" class="chat-session">
+                    <p style="font-weight: 600; margin-bottom: 0.3rem;">👨‍🏫 ${session.expertName}</p>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.3rem;">${session.courseName}</p>
+                    <p style="font-size: 0.75rem; color: var(--text-secondary);">${session.messages.length} messages</p>
+                </div>
+            `).join('');
+
+            document.getElementById('chatSessions').innerHTML = html;
+        }
+
+        function loadChatWindow(sessionId) {
+            const session = DB.chatSessions.find(s => s.id === sessionId);
+            
+            const messagesHTML = session.messages.map(msg => `
+                <div style="display: flex; margin-bottom: 1rem; flex-direction: ${msg.sender === 'user' ? 'row-reverse' : 'row'};">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: ${msg.sender === 'user' ? '#667eea' : '#10b981'}; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; flex-shrink: 0; margin: 0 0.5rem;">
+                        ${msg.sender === 'user' ? 'U' : 'E'}
+                    </div>
+                    <div style="background: ${msg.sender === 'user' ? 'rgba(102, 126, 234, 0.2)' : 'rgba(16, 185, 129, 0.2)'}; padding: 0.8rem; border-radius: 10px; max-width: 70%; word-wrap: break-word;">
+                        <p style="margin: 0; font-size: 0.9rem;">${msg.text}</p>
+                        <p style="margin: 0.3rem 0 0; font-size: 0.75rem; color: var(--text-secondary);">${new Date(msg.timestamp).toLocaleTimeString()}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('chatWindow').innerHTML = `
+                <div style="background: var(--card-bg); border: 1px solid rgba(102, 126, 234, 0.2); border-radius: 10px; display: flex; flex-direction: column; height: 500px;">
+                    <div style="padding: 1rem; border-bottom: 1px solid rgba(102, 126, 234, 0.2); background: rgba(102, 126, 234, 0.1);">
+                        <p style="margin: 0; font-weight: 600;">Chat with ${session.expertName}</p>
+                        <p style="margin: 0.3rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">${session.courseName}</p>
+                    </div>
+                    
+                    <div style="flex: 1; overflow-y: auto; padding: 1rem;">
+                        ${messagesHTML || '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">Start a conversation...</p>'}
+                    </div>
+                    
+                    <div style="padding: 1rem; border-top: 1px solid rgba(102, 126, 234, 0.2);">
+                        <form onsubmit="sendMessage(event, ${sessionId})" style="display: flex; gap: 0.5rem;">
+                            <input type="text" id="chatInput" placeholder="Type your message..." style="flex: 1; padding: 0.8rem; background: rgba(102, 126, 234, 0.1); border: 1px solid rgba(102, 126, 234, 0.2); color: white; border-radius: 8px;" required>
+                            <button type="submit" class="btn btn-primary" style="padding: 0.8rem 1.5rem;">Send</button>
+                        </form>
+                    </div>
+                </div>
+            `;
+        }
+
+        function sendMessage(e, sessionId) {
+            e.preventDefault();
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            
+            if (!text) return;
+
+            const session = DB.chatSessions.find(s => s.id === sessionId);
+            
+            // User message
+            session.messages.push({
+                sender: 'user',
+                text,
+                timestamp: new Date().toISOString()
+            });
+
+            // Simulate expert response
+            setTimeout(() => {
+                session.messages.push({
+                    sender: 'expert',
+                    text: generateExpertResponse(text),
+                    timestamp: new Date().toISOString()
+                });
+                saveData();
+                loadChatWindow(sessionId);
+            }, 1000);
+
+            input.value = '';
+            saveData();
+            loadChatWindow(sessionId);
+            updateDashboard();
+        }
+
+        function generateExpertResponse(userMessage) {
+            const responses = [
+                "Great question! Let me explain this in detail...",
+                "That's an excellent point. Based on the pipeline, we need to consider...",
+                "I'm glad you asked. This is a common issue when working with large datasets...",
+                "Good observation! In our experience, the best approach is...",
+                "Let me share some insights from similar projects we've worked on...",
+                "That's exactly right! You're thinking like a bioinformatician now!",
+                "This relates to the k-mer counting methodology we discussed earlier...",
+                "I recommend checking the quality metrics first, then we can proceed with..."
+            ];
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        // ============================================
+        // TAB MANAGEMENT
+        // ============================================
+
+        function openTab(tabName) {
+            document.querySelectorAll('.content-tab').forEach(el => el.style.display = 'none');
+            document.getElementById(tabName).style.display = 'block';
+
+            if (tabName === 'coursesTab') {
+                loadCoursesGrid();
+            } else if (tabName === 'applicationsTab') {
+                loadApplicationsList();
+            } else if (tabName === 'chatTab') {
+                loadChatSessions();
+            }
+        }
+
+        // ============================================
+        // EMAIL LOGGING
+        // ============================================
+
+        function logEmailNotification(message, recipient, type) {
+            const emailLog = {
+                id: (DB.emailLogs || []).length + 1,
+                timestamp: new Date().toISOString(),
+                recipient,
+                type,
+                message,
+                status: 'sent'
+            };
+
+            if (!DB.emailLogs) DB.emailLogs = [];
+            DB.emailLogs.push(emailLog);
+            saveData();
+
+            console.log(`📧 EMAIL NOTIFICATION`);
+            console.log(`To: ${recipient}`);
+            console.log(`Type: ${type}`);
+            console.log(`Message: ${message}`);
+            console.log('---');
+        }
+
+        // ============================================
+        // DASHBOARD UPDATE
+        // ============================================
+
+        function updateDashboard() {
+            const userApps = DB.applications.filter(a => a.userId === DB.currentUser.id);
+            const userChats = DB.chatSessions.filter(s => s.userId === DB.currentUser.id);
+            const totalMessages = userChats.reduce((sum, chat) => sum + chat.messages.length, 0);
+
+            document.getElementById('statCourses').textContent = userApps.length;
+            document.getElementById('statChats').textContent = userChats.length;
+            document.getElementById('statMessages').textContent = totalMessages;
         }
 
         // ============================================
