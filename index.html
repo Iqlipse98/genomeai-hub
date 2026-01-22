@@ -720,7 +720,7 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <div class="nav-brand">⚡ Tinasacious</div>
+        <div class="nav-brand">⚡ Tinsacious</div>
         <div class="nav-links">
             <a class="nav-link" onclick="navigate('home')">Home</a>
             <a class="nav-link" onclick="navigate('services')">Services</a>
@@ -736,7 +736,7 @@
             <div class="hero">
                 <div class="hero-content">
                     <h1>Transform Genomic Data into <span class="gradient">Insights</span></h1>
-                    <p>Tinasacious provides cutting-edge bioinformatics solutions for genome analysis, k-mer GWAS, and advanced genomic research. Expert-led analysis. Production-quality results.</p>
+                    <p>Tinsacious provides cutting-edge bioinformatics solutions for genome analysis, k-mer GWAS, and advanced genomic research. Expert-led analysis. Production-quality results.</p>
                     <div class="hero-buttons">
                         <button class="btn btn-primary" onclick="navigate('services')">Explore Services</button>
                         <button class="btn btn-secondary" onclick="navigate('analysis')">Try Analysis Tool</button>
@@ -1054,7 +1054,7 @@
                         <span class="faq-toggle">▼</span>
                     </div>
                     <div class="faq-answer">
-                        <p>Absolutely! All our analysis results are publication-ready. We provide detailed methods sections and can assist with manuscript preparation. Citation of Tinasacious is appreciated but not required.</p>
+                        <p>Absolutely! All our analysis results are publication-ready. We provide detailed methods sections and can assist with manuscript preparation. Citation of Tinsacious is appreciated but not required.</p>
                     </div>
                 </div>
 
@@ -1223,13 +1223,13 @@
         // ============================================
 
         const DB = {
-            users: JSON.parse(localStorage.getItem('tinasacious_users')) || [],
-            courses: JSON.parse(localStorage.getItem('tinasacious_courses')) || [],
-            applications: JSON.parse(localStorage.getItem('tinasacious_applications')) || [],
-            analysisRequests: JSON.parse(localStorage.getItem('tinasacious_analysis')) || [],
-            chatSessions: JSON.parse(localStorage.getItem('tinasacious_chats')) || [],
-            emailLogs: JSON.parse(localStorage.getItem('tinasacious_emails')) || [],
-            currentUser: JSON.parse(localStorage.getItem('tinasacious_currentUser')) || null,
+            users: JSON.parse(localStorage.getItem('tinsacious_users')) || [],
+            courses: JSON.parse(localStorage.getItem('tinsacious_courses')) || [],
+            applications: JSON.parse(localStorage.getItem('tinsacious_applications')) || [],
+            analysisRequests: JSON.parse(localStorage.getItem('tinsacious_analysis')) || [],
+            chatSessions: JSON.parse(localStorage.getItem('tinsacious_chats')) || [],
+            emailLogs: JSON.parse(localStorage.getItem('tinsacious_emails')) || [],
+            currentUser: JSON.parse(localStorage.getItem('tinsacious_currentUser')) || null,
             tempSignupData: null
         };
 
@@ -1318,13 +1318,13 @@
         }
 
         function saveData() {
-            localStorage.setItem('tinasacious_users', JSON.stringify(DB.users));
-            localStorage.setItem('tinasacious_courses', JSON.stringify(DB.courses));
-            localStorage.setItem('tinasacious_applications', JSON.stringify(DB.applications));
-            localStorage.setItem('tinasacious_analysis', JSON.stringify(DB.analysisRequests));
-            localStorage.setItem('tinasacious_chats', JSON.stringify(DB.chatSessions));
-            localStorage.setItem('tinasacious_emails', JSON.stringify(DB.emailLogs));
-            localStorage.setItem('tinasacious_currentUser', JSON.stringify(DB.currentUser));
+            localStorage.setItem('tinsacious_users', JSON.stringify(DB.users));
+            localStorage.setItem('tinsacious_courses', JSON.stringify(DB.courses));
+            localStorage.setItem('tinsacious_applications', JSON.stringify(DB.applications));
+            localStorage.setItem('tinsacious_analysis', JSON.stringify(DB.analysisRequests));
+            localStorage.setItem('tinsacious_chats', JSON.stringify(DB.chatSessions));
+            localStorage.setItem('tinsacious_emails', JSON.stringify(DB.emailLogs));
+            localStorage.setItem('tinsacious_currentUser', JSON.stringify(DB.currentUser));
         }
 
         // ============================================
@@ -1336,7 +1336,7 @@
                 id: DB.emailLogs.length + 1,
                 timestamp: new Date().toISOString(),
                 to: EMAIL_RECEIVER,
-                from: DB.currentUser ? DB.currentUser.email : 'system@tinasacious.com',
+                from: DB.currentUser ? DB.currentUser.email : 'system@tinsacious.com',
                 subject: subject,
                 body: body,
                 type: emailType,
@@ -1450,7 +1450,7 @@
 
             sendEmailNotification(
                 `OTP for Account Registration - ${email}`,
-                `Dear ${name},\n\nYour OTP for registration is: ${otp}\n\nThis OTP will expire in 10 minutes.\n\nBest regards,\nTinasacious Team`,
+                `Dear ${name},\n\nYour OTP for registration is: ${otp}\n\nThis OTP will expire in 10 minutes.\n\nBest regards,\nTinsacious Team`,
                 'otp_verification'
             );
 
@@ -1497,7 +1497,7 @@
 
             sendEmailNotification(
                 `New User Registration - ${name}`,
-                `Welcome to Tinasacious!\n\nName: ${name}\nEmail: ${email}\nOrganization: ${org || 'Not provided'}\n\nAccount successfully created!\n\nBest regards,\nTinasacious Team`,
+                `Welcome to Tinsacious!\n\nName: ${name}\nEmail: ${email}\nOrganization: ${org || 'Not provided'}\n\nAccount successfully created!\n\nBest regards,\nTinsacious Team`,
                 'account_creation'
             );
 
