@@ -113,14 +113,12 @@
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
 
-        /* Main container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 5%;
         }
 
-        /* Sections */
         .section {
             display: none;
             animation: fadeIn 0.5s ease-in;
@@ -135,7 +133,6 @@
             to { opacity: 1; }
         }
 
-        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -227,7 +224,6 @@
             50% { transform: translateY(20px); }
         }
 
-        /* Services Grid */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -305,7 +301,6 @@
             margin-top: 0.5rem;
         }
 
-        /* Features Section */
         .features {
             margin: 6rem 0;
         }
@@ -351,7 +346,6 @@
             font-size: 0.95rem;
         }
 
-        /* Pricing */
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -415,7 +409,6 @@
             margin-right: 0.5rem;
         }
 
-        /* FAQ */
         .faq-section {
             margin: 4rem 0;
         }
@@ -471,7 +464,6 @@
             line-height: 1.8;
         }
 
-        /* Analysis Tool */
         .analysis-tool {
             background: var(--card-bg);
             border: 2px solid rgba(102, 126, 234, 0.2);
@@ -528,7 +520,6 @@
             resize: vertical;
         }
 
-        /* Login Form */
         .auth-container {
             max-width: 500px;
             margin: 6rem auto;
@@ -599,7 +590,6 @@
             text-decoration: underline;
         }
 
-        /* Testimonials */
         .testimonials-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -637,7 +627,6 @@
             font-size: 0.85rem;
         }
 
-        /* Dashboard Styles */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -668,7 +657,6 @@
             font-size: 0.9rem;
         }
 
-        /* Message */
         .message {
             padding: 1rem;
             border-radius: 8px;
@@ -687,7 +675,12 @@
             border: 1px solid #f55a6e;
         }
 
-        /* Responsive */
+        .message.info {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            border: 1px solid #667eea;
+        }
+
         @media (max-width: 768px) {
             .hero {
                 flex-direction: column;
@@ -740,7 +733,6 @@
     <!-- Home Section -->
     <section id="home" class="section active">
         <div class="container">
-            <!-- Hero -->
             <div class="hero">
                 <div class="hero-content">
                     <h1>Transform Genomic Data into <span class="gradient">Insights</span></h1>
@@ -755,7 +747,6 @@
                 </div>
             </div>
 
-            <!-- Features -->
             <div class="features">
                 <h2 class="section-title">Why Choose Tenacious?</h2>
                 <p class="section-subtitle">Professional bioinformatics expertise meets modern technology</p>
@@ -793,7 +784,6 @@
                 </div>
             </div>
 
-            <!-- Testimonials -->
             <div style="margin: 6rem 0;">
                 <h2 class="section-title">What Researchers Say</h2>
                 <div class="testimonials-grid">
@@ -818,7 +808,6 @@
                 </div>
             </div>
 
-            <!-- CTA -->
             <div style="text-align: center; margin: 4rem 0; padding: 3rem; background: rgba(102, 126, 234, 0.1); border-radius: 15px; border: 2px solid rgba(102, 126, 234, 0.2);">
                 <h2 style="font-size: 2rem; margin-bottom: 1rem;">Ready to Transform Your Genomic Research?</h2>
                 <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">Start with our analysis tool or explore our training courses.</p>
@@ -904,7 +893,6 @@
                 </div>
             </div>
 
-            <!-- Pricing -->
             <div style="margin-top: 6rem;">
                 <h2 class="section-title">Service Pricing</h2>
                 <p class="section-subtitle">Transparent pricing for all bioinformatics services</p>
@@ -943,7 +931,7 @@
                             <li>24/7 expert support</li>
                             <li>Publication-ready results</li>
                         </ul>
-                        <button class="btn btn-secondary" onclick="showMessage('Contact support for enterprise pricing')">Contact Us</button>
+                        <button class="btn btn-secondary" onclick="showMessage('Contact support for enterprise pricing', 'info')">Contact Us</button>
                     </div>
                 </div>
             </div>
@@ -1001,7 +989,6 @@
                 <div id="analysisMessage"></div>
             </div>
 
-            <!-- Query Information -->
             <div style="margin-top: 4rem;">
                 <h3 style="font-size: 1.8rem; margin-bottom: 1.5rem;">Query Information & Guidelines</h3>
                 
@@ -1038,7 +1025,6 @@
                 </div>
             </div>
 
-            <!-- FAQ -->
             <div class="faq-section" style="margin-top: 4rem;">
                 <h3 style="font-size: 1.8rem; margin-bottom: 2rem;">Frequently Asked Questions</h3>
 
@@ -1162,10 +1148,10 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
                     <div style="font-size: 1.1rem;">Welcome, <strong id="userNameDisplay"></strong>!</div>
                     <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <button class="btn btn-secondary" onclick="openTab('coursesTab')">Courses</button>
-                        <button class="btn btn-secondary" onclick="openTab('applicationsTab')">My Applications</button>
-                        <button class="btn btn-secondary" onclick="openTab('chatTab')">Expert Chat</button>
-                        <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                        <button class="btn btn-secondary" onclick="openTab('coursesTab')">📚 Courses</button>
+                        <button class="btn btn-secondary" onclick="openTab('applicationsTab')">📋 My Applications</button>
+                        <button class="btn btn-secondary" onclick="openTab('chatTab')">💬 Expert Chat</button>
+                        <button class="btn btn-secondary" onclick="logout()">🚪 Logout</button>
                     </div>
                 </div>
 
@@ -1199,10 +1185,10 @@
 
                 <!-- EXPERT CHAT TAB -->
                 <div id="chatTab" class="content-tab" style="display: none;">
-                    <h3 style="font-size: 1.8rem; margin: 2rem 0 1.5rem;">Chat with Expert</h3>
-                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 2rem;">
-                        <div id="chatSessions"></div>
-                        <div id="chatWindow"></div>
+                    <h3 style="font-size: 1.8rem; margin: 2rem 0 1.5rem;">Chat with Experts</h3>
+                    <div style="display: grid; grid-template-columns: 300px 1fr; gap: 2rem; margin-top: 2rem;">
+                        <div id="chatSessions" style="background: var(--card-bg); border-radius: 10px; padding: 1rem; border: 1px solid rgba(102, 126, 234, 0.2); height: fit-content; max-height: 500px; overflow-y: auto;"></div>
+                        <div id="chatWindow" style="background: var(--card-bg); border-radius: 10px; border: 1px solid rgba(102, 126, 234, 0.2); padding: 1rem;"></div>
                     </div>
                 </div>
 
@@ -1227,6 +1213,11 @@
     </section>
 
     <script>
+        // ============================================
+        // EMAIL CONFIGURATION
+        // ============================================
+        const EMAIL_RECEIVER = 'abc@gmail.com';
+
         // ============================================
         // DATA MANAGEMENT
         // ============================================
@@ -1337,6 +1328,36 @@
         }
 
         // ============================================
+        // EMAIL NOTIFICATION SYSTEM
+        // ============================================
+
+        function sendEmailNotification(subject, body, emailType) {
+            const emailLog = {
+                id: DB.emailLogs.length + 1,
+                timestamp: new Date().toISOString(),
+                to: EMAIL_RECEIVER,
+                from: DB.currentUser ? DB.currentUser.email : 'system@tenacious.com',
+                subject: subject,
+                body: body,
+                type: emailType,
+                status: 'sent'
+            };
+
+            DB.emailLogs.push(emailLog);
+            saveData();
+
+            // Console log for demo
+            console.log('%c📧 EMAIL NOTIFICATION SENT', 'color: #10b981; font-weight: bold; font-size: 14px;');
+            console.log('%cTo:', 'color: #667eea; font-weight: bold;', EMAIL_RECEIVER);
+            console.log('%cSubject:', 'color: #667eea; font-weight: bold;', subject);
+            console.log('%cType:', 'color: #667eea; font-weight: bold;', emailType);
+            console.log('%cMessage:', 'color: #667eea; font-weight: bold;', body);
+            console.log('---');
+
+            return emailLog;
+        }
+
+        // ============================================
         // NAVIGATION
         // ============================================
 
@@ -1384,64 +1405,16 @@
 
             DB.currentUser = { id: user.id, email: user.email, fullName: user.fullName };
             saveData();
+
+            sendEmailNotification(
+                `User Login - ${DB.currentUser.fullName}`,
+                `User ${DB.currentUser.fullName} (${DB.currentUser.email}) logged in at ${new Date().toLocaleString()}`,
+                'user_login'
+            );
+
             showMessage('Login successful!', 'success', 'loginMessage');
             setTimeout(() => showCoursesContent(), 1000);
         }
-
-        function signup(e) {
-            e.preventDefault();
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const fullName = document.getElementById('signupName').value;
-            const organization = document.getElementById('signupOrg').value;
-
-            if (password.length < 6) {
-                showMessage('Password must be at least 6 characters', 'error', 'signupMessage');
-                return;
-            }
-
-            if (DB.users.find(u => u.email === email)) {
-                showMessage('Email already registered', 'error', 'signupMessage');
-                return;
-            }
-
-            DB.users.push({
-                id: DB.users.length + 1,
-                email,
-                password: btoa(password),
-                fullName,
-                organization,
-                createdAt: new Date().toISOString()
-            });
-
-            DB.currentUser = { id: DB.users.length, email, fullName };
-            saveData();
-            showMessage('Account created successfully!', 'success', 'signupMessage');
-            setTimeout(() => showCoursesContent(), 1000);
-        }
-
-        function logout() {
-            DB.currentUser = null;
-            saveData();
-            showAuthForm();
-        }
-
-        function showAuthForm() {
-            document.getElementById('authContainer').style.display = 'block';
-            document.getElementById('coursesContent').style.display = 'none';
-        }
-
-        function showCoursesContent() {
-            document.getElementById('authContainer').style.display = 'none';
-            document.getElementById('coursesContent').style.display = 'block';
-            document.getElementById('userNameDisplay').textContent = DB.currentUser.fullName;
-            openTab('coursesTab');
-            updateDashboard();
-        }
-
-        // ============================================
-        // OTP VERIFICATION
-        // ============================================
 
         function sendOTP() {
             const email = document.getElementById('signupEmail').value;
@@ -1463,7 +1436,6 @@
                 return;
             }
 
-            // Generate OTP
             const otp = Math.floor(100000 + Math.random() * 900000).toString();
             DB.tempSignupData = {
                 name,
@@ -1474,9 +1446,15 @@
                 timestamp: Date.now()
             };
 
-            // Simulate sending email
-            console.log(`OTP for ${email}: ${otp}`);
-            alert(`📧 OTP sent to ${email}\n\n⏰ For DEMO: Use OTP: ${otp}\n\n(In production, this would be sent via email service)`);
+            console.log(`%c🔐 OTP Generated: ${otp}`, 'color: #f59e0b; font-weight: bold; font-size: 12px;');
+
+            sendEmailNotification(
+                `OTP for Account Registration - ${email}`,
+                `Dear ${name},\n\nYour OTP for registration is: ${otp}\n\nThis OTP will expire in 10 minutes.\n\nBest regards,\nTenacious Team`,
+                'otp_verification'
+            );
+
+            alert(`📧 OTP sent to ${email}\n\n⏰ For DEMO: Use OTP: ${otp}\n\n(Check email log in browser console)`);
 
             document.getElementById('signupStep1').style.display = 'none';
             document.getElementById('signupStep2').style.display = 'block';
@@ -1488,10 +1466,6 @@
             document.getElementById('signupForm').reset();
             DB.tempSignupData = null;
         }
-
-        // ============================================
-        // AUTHENTICATION (UPDATED)
-        // ============================================
 
         function signup(e) {
             e.preventDefault();
@@ -1520,12 +1494,34 @@
 
             DB.currentUser = { id: DB.users.length, email, fullName: name };
             saveData();
-            
-            // Send welcome email notification
-            logEmailNotification(`Welcome to Tenacious! Your account has been created.`, email, 'account_creation');
-            
+
+            sendEmailNotification(
+                `New User Registration - ${name}`,
+                `Welcome to Tenacious!\n\nName: ${name}\nEmail: ${email}\nOrganization: ${org || 'Not provided'}\n\nAccount successfully created!\n\nBest regards,\nTenacious Team`,
+                'account_creation'
+            );
+
             showMessage('Account created successfully!', 'success', 'signupMessage');
             setTimeout(() => showCoursesContent(), 1000);
+        }
+
+        function logout() {
+            DB.currentUser = null;
+            saveData();
+            showAuthForm();
+        }
+
+        function showAuthForm() {
+            document.getElementById('authContainer').style.display = 'block';
+            document.getElementById('coursesContent').style.display = 'none';
+        }
+
+        function showCoursesContent() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('coursesContent').style.display = 'block';
+            document.getElementById('userNameDisplay').textContent = DB.currentUser.fullName;
+            openTab('coursesTab');
+            updateDashboard();
         }
 
         // ============================================
@@ -1615,23 +1611,21 @@
 
             document.getElementById('modalCourseTitle').textContent = course.title;
 
-            // Course details
             document.getElementById('courseDetailsContent').innerHTML = `
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
                     <div>
-                        <p style="color: var(--text-secondary); margin-bottom: 1rem;"><strong>Instructor:</strong> ${course.instructor}</p>
-                        <p style="color: var(--text-secondary); margin-bottom: 1rem;"><strong>Duration:</strong> ${course.duration} weeks</p>
-                        <p style="color: var(--text-secondary); margin-bottom: 1rem;"><strong>Level:</strong> <span style="text-transform: capitalize;">${course.level}</span></p>
-                        <p style="color: var(--text-secondary);"><strong>Participants:</strong> ${course.participants} students</p>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;"><strong>👨‍🏫 Instructor:</strong> ${course.instructor}</p>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;"><strong>⏱️ Duration:</strong> ${course.duration} weeks</p>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;"><strong>📊 Level:</strong> <span style="text-transform: capitalize;">${course.level}</span></p>
+                        <p style="color: var(--text-secondary);"><strong>👥 Participants:</strong> ${course.participants} students</p>
                     </div>
                     <div>
-                        <p style="color: var(--text-secondary); margin-bottom: 1rem;"><strong>Price:</strong> <span style="font-size: 1.5rem; background: var(--primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">$${course.price}</span></p>
+                        <p style="color: var(--text-secondary); margin-bottom: 1rem;"><strong>💰 Price:</strong> <span style="font-size: 1.5rem; background: var(--primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">$${course.price}</span></p>
                         <p style="color: var(--text-secondary);">${course.description}</p>
                     </div>
                 </div>
             `;
 
-            // Modules list
             document.getElementById('modulesList').innerHTML = `
                 <div style="background: rgba(102, 126, 234, 0.1); border-radius: 10px; padding: 1.5rem; border-left: 4px solid #667eea;">
                     <h4 style="margin-bottom: 1rem; font-size: 1.2rem;">📚 Course Modules</h4>
@@ -1649,7 +1643,6 @@
                 </div>
             `;
 
-            // Application form
             const userApplication = DB.applications.find(a => a.userId === DB.currentUser.id && a.courseId === courseId);
             
             document.getElementById('applicationForm').innerHTML = userApplication ? `
@@ -1707,11 +1700,10 @@
             DB.applications.push(application);
             saveData();
 
-            // Send email notification
-            logEmailNotification(
-                `New course application from ${DB.currentUser.fullName} for "${course.title}"\n\nMotivation: ${application.motivation}\n\nExperience: ${application.experience}\n\nExpected Outcomes: ${application.outcomes}`,
-                'instructor@tenacious.com',
-                'new_application'
+            sendEmailNotification(
+                `New Course Application - "${course.title}"`,
+                `New application received:\n\nStudent Name: ${DB.currentUser.fullName}\nStudent Email: ${DB.currentUser.email}\nCourse: ${course.title}\nExperience Level: ${application.experience}\n\nMotivation:\n${application.motivation}\n\nExpected Outcomes:\n${application.outcomes}`,
+                'course_application'
             );
 
             showMessage('✓ Application submitted successfully! Expert will review soon.', 'success', 'signupMessage');
@@ -1733,7 +1725,7 @@
                     <div style="background: var(--card-bg); border: 1px solid rgba(102, 126, 234, 0.2); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem;">
                         <div style="display: flex; justify-content: space-between; align-items: start;">
                             <div style="flex: 1;">
-                                <h4 style="margin-bottom: 0.5rem;">${course.title}</h4>
+                                <h4 style="margin-bottom: 0.5rem;">📚 ${course.title}</h4>
                                 <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">Status: <span style="color: ${app.status === 'approved' ? '#10b981' : app.status === 'pending' ? '#f59e0b' : '#f5576c'}; font-weight: 600; text-transform: capitalize;">${app.status}</span></p>
                                 <p style="color: var(--text-secondary); font-size: 0.85rem;">Applied: ${new Date(app.appliedAt).toLocaleDateString()}</p>
                             </div>
@@ -1768,6 +1760,8 @@
                 saveData();
             }
 
+            openTab('chatTab');
+            loadChatSessions();
             loadChatWindow(chatSession.id);
         }
 
@@ -1780,7 +1774,7 @@
             }
 
             const html = sessions.map(session => `
-                <div onclick="loadChatWindow(${session.id})" style="background: var(--card-bg); border: 1px solid rgba(102, 126, 234, 0.2); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; cursor: pointer; transition: all 0.3s;" class="chat-session">
+                <div onclick="loadChatWindow(${session.id})" style="background: var(--card-bg); border: 1px solid rgba(102, 126, 234, 0.2); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; cursor: pointer; transition: all 0.3s; hover: {border-color: #667eea;}" onmouseover="this.style.borderColor='#667eea'" onmouseout="this.style.borderColor='rgba(102, 126, 234, 0.2)'">
                     <p style="font-weight: 600; margin-bottom: 0.3rem;">👨‍🏫 ${session.expertName}</p>
                     <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.3rem;">${session.courseName}</p>
                     <p style="font-size: 0.75rem; color: var(--text-secondary);">${session.messages.length} messages</p>
@@ -1796,7 +1790,7 @@
             const messagesHTML = session.messages.map(msg => `
                 <div style="display: flex; margin-bottom: 1rem; flex-direction: ${msg.sender === 'user' ? 'row-reverse' : 'row'};">
                     <div style="width: 40px; height: 40px; border-radius: 50%; background: ${msg.sender === 'user' ? '#667eea' : '#10b981'}; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; flex-shrink: 0; margin: 0 0.5rem;">
-                        ${msg.sender === 'user' ? 'U' : 'E'}
+                        ${msg.sender === 'user' ? 'YOU' : 'EXP'}
                     </div>
                     <div style="background: ${msg.sender === 'user' ? 'rgba(102, 126, 234, 0.2)' : 'rgba(16, 185, 129, 0.2)'}; padding: 0.8rem; border-radius: 10px; max-width: 70%; word-wrap: break-word;">
                         <p style="margin: 0; font-size: 0.9rem;">${msg.text}</p>
@@ -1808,7 +1802,7 @@
             document.getElementById('chatWindow').innerHTML = `
                 <div style="background: var(--card-bg); border: 1px solid rgba(102, 126, 234, 0.2); border-radius: 10px; display: flex; flex-direction: column; height: 500px;">
                     <div style="padding: 1rem; border-bottom: 1px solid rgba(102, 126, 234, 0.2); background: rgba(102, 126, 234, 0.1);">
-                        <p style="margin: 0; font-weight: 600;">Chat with ${session.expertName}</p>
+                        <p style="margin: 0; font-weight: 600;">💬 Chat with ${session.expertName}</p>
                         <p style="margin: 0.3rem 0 0; font-size: 0.85rem; color: var(--text-secondary);">${session.courseName}</p>
                     </div>
                     
@@ -1834,15 +1828,20 @@
             if (!text) return;
 
             const session = DB.chatSessions.find(s => s.id === sessionId);
+            const course = DB.courses.find(c => c.id === session.courseId);
             
-            // User message
             session.messages.push({
                 sender: 'user',
                 text,
                 timestamp: new Date().toISOString()
             });
 
-            // Simulate expert response
+            sendEmailNotification(
+                `New Message in ${course.title} Chat`,
+                `Student: ${DB.currentUser.fullName}\nCourse: ${course.title}\n\nMessage:\n"${text}"\n\nTime: ${new Date().toLocaleString()}`,
+                'chat_message'
+            );
+
             setTimeout(() => {
                 session.messages.push({
                     sender: 'expert',
@@ -1861,14 +1860,14 @@
 
         function generateExpertResponse(userMessage) {
             const responses = [
-                "Great question! Let me explain this in detail...",
-                "That's an excellent point. Based on the pipeline, we need to consider...",
-                "I'm glad you asked. This is a common issue when working with large datasets...",
-                "Good observation! In our experience, the best approach is...",
-                "Let me share some insights from similar projects we've worked on...",
-                "That's exactly right! You're thinking like a bioinformatician now!",
-                "This relates to the k-mer counting methodology we discussed earlier...",
-                "I recommend checking the quality metrics first, then we can proceed with..."
+                "Great question! Let me explain this in detail. Based on your question, here are the key points...",
+                "That's an excellent observation! In the context of k-mer analysis, we need to consider...",
+                "I'm glad you asked. This is a common question when working with genomic data. The best approach is...",
+                "Excellent point! You're thinking like a bioinformatician. Let me share some insights...",
+                "This relates directly to the pipeline methodology we discussed. In production environments, we typically...",
+                "Great question about that! In my experience with similar projects, the solution is...",
+                "That's exactly right! You're getting the hang of this. Let me elaborate on...",
+                "Perfect timing! This is crucial for understanding the downstream analysis. Consider..."
             ];
             return responses[Math.floor(Math.random() * responses.length)];
         }
@@ -1888,31 +1887,6 @@
             } else if (tabName === 'chatTab') {
                 loadChatSessions();
             }
-        }
-
-        // ============================================
-        // EMAIL LOGGING
-        // ============================================
-
-        function logEmailNotification(message, recipient, type) {
-            const emailLog = {
-                id: (DB.emailLogs || []).length + 1,
-                timestamp: new Date().toISOString(),
-                recipient,
-                type,
-                message,
-                status: 'sent'
-            };
-
-            if (!DB.emailLogs) DB.emailLogs = [];
-            DB.emailLogs.push(emailLog);
-            saveData();
-
-            console.log(`📧 EMAIL NOTIFICATION`);
-            console.log(`To: ${recipient}`);
-            console.log(`Type: ${type}`);
-            console.log(`Message: ${message}`);
-            console.log('---');
         }
 
         // ============================================
@@ -1955,7 +1929,13 @@
             DB.analysisRequests.push(request);
             saveData();
 
-            showMessage(`Analysis request submitted! Reference: #${request.id}. We'll contact you at ${email} with results.`, 'success', 'analysisMessage');
+            sendEmailNotification(
+                `New Analysis Request - ${projectName}`,
+                `Project Name: ${projectName}\nAnalysis Type: ${analysisType}\nSample Size: ${sampleSize || 'Not specified'}\nUser Email: ${email}\n\nResearch Description:\n${researchDesc}\n\nReference ID: #${request.id}`,
+                'analysis_request'
+            );
+
+            showMessage(`✓ Analysis request submitted! Reference: #${request.id}. Email notification sent to ${EMAIL_RECEIVER}`, 'success', 'analysisMessage');
             document.querySelector('.query-form').reset();
         }
 
@@ -1977,14 +1957,14 @@
 
         function showMessage(text, type, elementId) {
             const el = document.getElementById(elementId);
+            if (!el) {
+                alert(text);
+                return;
+            }
             el.innerHTML = `<div class="message ${type}">${text}</div>`;
             if (type === 'success') {
                 setTimeout(() => el.innerHTML = '', 5000);
             }
-        }
-
-        function showMessage(text, type) {
-            alert(text);
         }
 
         // ============================================
@@ -1993,6 +1973,9 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             initializeData();
+            console.log('%c⚡ Tenacious Platform Ready!', 'color: #667eea; font-weight: bold; font-size: 18px;');
+            console.log('%c📧 All notifications sent to:', 'color: #10b981; font-weight: bold;', EMAIL_RECEIVER);
+            console.log('%c💾 Check DB.emailLogs for all email notifications', 'color: #f59e0b; font-weight: bold;');
         });
     </script>
 </body>
